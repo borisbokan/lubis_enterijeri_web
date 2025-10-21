@@ -272,7 +272,10 @@ h6 {
 }
 
 .swiper-category-wrapper {
-  overflow: visible !important;
+
+  position: relative;
+  overflow: hidden;
+  
 }
 
 /* 2. Ekstremno izgurivanje dugmadi za galeriju slika (category-nav-btn) */
