@@ -101,6 +101,7 @@ h6 {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+
 /* =====================
    Dugmad
    ===================== */
@@ -356,6 +357,48 @@ h6 {
 
 .custom-footer-bg a:hover {
   color: var(--primary-color) !important;
+}
+
+
+/* =======================================================
+   KOREKCIJE ZA MOBILNI PRIKAZ (index.html)
+   ======================================================= */
+
+@media (max-width: 767px) {
+
+  /* 1. KOREKCIJA HERO SEKCIJE */
+  .hero-section {
+    height: 70vh;
+    /* Malo manja visina za bolje uklapanje sadržaja */
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  /* Smanjivanje glavnog naslova H1 */
+  .hero-section h1 {
+    font-size: 2.2rem !important;
+    /* Drastično smanjujemo font */
+    margin-bottom: 0.5rem !important;
+    /* Smanjujemo razmak između redova naslova */
+  }
+
+  /* Smanjivanje podnaslova (lead) */
+  .hero-section .lead {
+    font-size: 0.95rem;
+    margin-bottom: 2rem !important;
+  }
+
+  /* 2. KOREKCIJA PREKLAPANJA - Dodavanje razmaka iznad prve sekcije nakon heroja */
+  /* Targetiramo prvu sekciju nakon heroja koja ima klasu .py-5 */
+  main section:nth-child(2) {
+    margin-top: 1rem;
+    /* Dodatni razmak da se osigura da nema preklapanja */
+  }
+
+  /* Prilagođavamo veličinu sekcije Ko smo mi sliku na mobilnom */
+  .section-title {
+    font-size: 2rem;
+  }
 }
 
 /* =====================
