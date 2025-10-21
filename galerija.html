@@ -4,11 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Galerija - Elegant Namještaj</title>
+  <title>Galerija - Elegantni Namještaj</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
   <link rel="stylesheet" href="css/style.css">
 
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
@@ -104,8 +104,8 @@
 
           </div>
 
-          <div class="swiper-button-next custom-swiper-next"></div>
-          <div class="swiper-button-prev custom-swiper-prev"></div>
+          <div class="swiper-button-next video-nav-btn"></div>
+          <div class="swiper-button-prev video-nav-btn"></div>
         </div>
 
       </div>
@@ -116,28 +116,24 @@
       <div class="container">
         <h2 class="section-title text-center mb-5">Galerija Slika Radova</h2>
 
-        <div class="mb-5">
+        <div class="mb-5 swiper-category-wrapper">
           <h3 class="category-title mb-4">Kuhinje</h3>
           <div class="swiper image-swiper" data-category="Kuhinje">
             <div class="swiper-wrapper">
               <div class="swiper-slide">
-                <img src="slike/kuhinje/kuhinja1.jpg"
-                  data-full="slike/kuhinje/kuhinja1.jpg" alt="Moderna Kuhinja 1"
+                <img src="slike/kuhinje/kuhinja1.jpg" data-full="slike/kuhinje/kuhinja1.jpg" alt="Moderna Kuhinja 1"
                   class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
               </div>
               <div class="swiper-slide">
-                <img src="slike/kuhinje/kuhinja2.jpg"
-                  data-full="slike/kuhinje/kuhinja2.jpg" alt="Moderna Kuhinja 2"
+                <img src="slike/kuhinje/kuhinja2.jpg" data-full="slike/kuhinje/kuhinja2.jpg" alt="Moderna Kuhinja 2"
                   class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
               </div>
               <div class="swiper-slide">
-                <img src="slike/kuhinje/kuhinja3.jpg"
-                  data-full="slike/kuhinje/kuhinja3.jpg" alt="Moderna Kuhinja 3"
+                <img src="slike/kuhinje/kuhinja3.jpg" data-full="slike/kuhinje/kuhinja3.jpg" alt="Moderna Kuhinja 3"
                   class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
               </div>
               <div class="swiper-slide">
-                <img src="slike/kuhinje/kuhinja4.jpg"
-                  data-full="slike/kuhinje/kuhinja4.jpg" alt="Kuhinja 4"
+                <img src="slike/kuhinje/kuhinja4.jpg" data-full="slike/kuhinje/kuhinja4.jpg" alt="Kuhinja 4"
                   class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
               </div>
 
@@ -147,23 +143,21 @@
               </div>
 
             </div>
-            <div class="swiper-button-next custom-swiper-next-small"></div>
-            <div class="swiper-button-prev custom-swiper-prev-small"></div>
+            <div class="swiper-button-next category-nav-btn"></div>
+            <div class="swiper-button-prev category-nav-btn"></div>
           </div>
         </div>
 
-        <div class="mb-5">
+        <div class="mb-5 swiper-category-wrapper">
           <h3 class="category-title mb-4">Dnevni Boravci</h3>
           <div class="swiper image-swiper" data-category="dnevni">
             <div class="swiper-wrapper">
               <div class="swiper-slide">
-                <img src="slike/boravak/boravak1.jpg"
-                  data-full="slike/boravak/boravak1.jpg" alt="Dnevni Boravak 1"
+                <img src="slike/boravak/boravak1.jpg" data-full="slike/boravak/boravak1.jpg" alt="Dnevni Boravak 1"
                   class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
               </div>
               <div class="swiper-slide">
-                <img src="slike/boravak/boravak2.jpg"
-                  data-full="slike/boravak/boravak2.jpg" alt="Dnevni Boravak 2"
+                <img src="slike/boravak/boravak2.jpg" data-full="slike/boravak/boravak2.jpg" alt="Dnevni Boravak 2"
                   class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
               </div>
               <div class="swiper-slide">
@@ -179,48 +173,45 @@
                   class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
               </div>
             </div>
-            <div class="swiper-button-next custom-swiper-next-small"></div>
-            <div class="swiper-button-prev custom-swiper-prev-small"></div>
+            <div class="swiper-button-next category-nav-btn"></div>
+            <div class="swiper-button-prev category-nav-btn"></div>
           </div>
         </div>
 
-        <div class="mb-5">
+        <div class="mb-5 swiper-category-wrapper">
           <h3 class="category-title mb-4">Spavaće Sobe</h3>
           <div class="swiper image-swiper" data-category="spavace">
             <div class="swiper-wrapper">
               <div class="swiper-slide">
-                <img src="slike/spavace_sobe/spavaca_soba1.jpg"
-                  data-full="slike/spavace_sobe/spavaca_soba1.jpg" alt="Spavaća Soba 1"
-                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+                <img src="slike/spavace_sobe/spavaca_soba1.jpg" data-full="slike/spavace_sobe/spavaca_soba1.jpg"
+                  alt="Spavaća Soba 1" class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
               </div>
               <div class="swiper-slide">
-                <img src="slike/spavace_sobe/spavaca_soba2.jpg"
-                  data-full="slike/spavace_sobe/spavaca_soba2.jpg" alt="Spavaća Soba 2"
-                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+                <img src="slike/spavace_sobe/spavaca_soba2.jpg" data-full="slike/spavace_sobe/spavaca_soba2.jpg"
+                  alt="Spavaća Soba 2" class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
               </div>
 
-                <div class="swiper-slide">
-                  <img src="slike/spavace_sobe/spavaca_soba3.jpg" data-full="slike/spavace_sobe/spavaca_soba3.jpg" alt="Spavaća Soba 3"
-                    class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
-                </div>
+              <div class="swiper-slide">
+                <img src="slike/spavace_sobe/spavaca_soba3.jpg" data-full="slike/spavace_sobe/spavaca_soba3.jpg"
+                  alt="Spavaća Soba 3" class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
 
-                  <div class="swiper-slide">
-                    <img src="slike/spavace_sobe/spavaca_soba4.jpg" data-full="slike/spavace_sobe/spavaca_soba4.jpg" alt="Spavaća Soba 4"
-                      class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
-                  </div>
+              <div class="swiper-slide">
+                <img src="slike/spavace_sobe/spavaca_soba4.jpg" data-full="slike/spavace_sobe/spavaca_soba4.jpg"
+                  alt="Spavaća Soba 4" class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
             </div>
-            <div class="swiper-button-next custom-swiper-next-small"></div>
-            <div class="swiper-button-prev custom-swiper-prev-small"></div>
+            <div class="swiper-button-next category-nav-btn"></div>
+            <div class="swiper-button-prev category-nav-btn"></div>
           </div>
         </div>
 
-        <div class="mb-5">
+        <div class="mb-5 swiper-category-wrapper">
           <h3 class="category-title mb-4">Dječije Sobe</h3>
           <div class="swiper image-swiper" data-category="djecije">
             <div class="swiper-wrapper">
               <div class="swiper-slide">
-                <img src="slike/decije_sobe/decija1.jpg"
-                  data-full="slike/decije_sobe/decija1.jpg" alt="Dječija Soba 1"
+                <img src="slike/decije_sobe/decija1.jpg" data-full="slike/decije_sobe/decija1.jpg" alt="Dječija Soba 1"
                   class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
               </div>
               <div class="swiper-slide">
@@ -236,36 +227,61 @@
                   class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
               </div>
             </div>
-            <div class="swiper-button-next custom-swiper-next-small"></div>
-            <div class="swiper-button-prev custom-swiper-prev-small"></div>
+            <div class="swiper-button-next category-nav-btn"></div>
+            <div class="swiper-button-prev category-nav-btn"></div>
           </div>
         </div>
 
-          <div class="mb-5">
-            <h3 class="category-title mb-4">Kancelarije</h3>
-            <div class="swiper image-swiper" data-category="kancelarije">
-              <div class="swiper-wrapper">
+        <div class="mb-5 swiper-category-wrapper">
+          <h3 class="category-title mb-4">Dječije Sobe</h3>
+          <div class="swiper image-swiper" data-category="kancelarije">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <img src="slike/kancelarija/office1.jpg" data-full="slike/kancelarija/office1.jpg" alt="Office 1"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+              <div class="swiper-slide">
+                <img src="slike/kancelarija/office2.jpg" data-full="slike/kancelarija/office2.jpg" alt="Office 2"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+              <div class="swiper-slide">
+                <img src="slike/kancelarija/office3.jpg" data-full="slike/kancelarija/office3.jpg" alt="Office 3"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
                 <div class="swiper-slide">
-                  <img src="slike/kancelarija/office1.jpg" data-full="slike/kancelarija/office1.jpg" alt="Kancelarija 1"
+                  <img src="slike/kancelarija/office4.jpg" data-full="slike/kancelarija/office4.jpg" alt="Office 4"
                     class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
                 </div>
-                <div class="swiper-slide">
-                  <img src="slike/kancelarija/office2.jpg" data-full="slike/kancelarija/office2.jpg" alt="Kancelarija 2"
-                    class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
-                </div>
-                <div class="swiper-slide">
+            </div>
+            <div class="swiper-button-next category-nav-btn"></div>
+            <div class="swiper-button-prev category-nav-btn"></div>
+          </div>
+        </div>
+
+        <!-- <div class="mb-5 swiper-category-wrapper">
+          <h3 class="category-title mb-4">Kancelarije</h3>
+          <div class="swiper image-swiper" data-category="kancelarije">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <img src="slike/kancelarija/office1.jpg" data-full="slike/kancelarija/office1.jpg" alt="Kancelarija 1"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+              <div class="swiper-slide">
+                <img src="slike/kancelarija/office2.jpg" data-full="slike/kancelarija/office2.jpg" alt="Kancelarija 2"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+              <div class="swiper-slide">
                 <img src="slike/kancelarija/office3.jpg" data-full="slike/kancelarija/office3.jpg" alt="Kancelarija 3"
                   class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
-                </div>
-                <div class="swiper-slide">
-              
               </div>
-              <div class="swiper-button-next custom-swiper-next-small"></div>
-              <div class="swiper-button-prev custom-swiper-prev-small"></div>
+              <div class="swiper-slide">
+
+              </div>
+              <div class="swiper-button-next category-nav-btn"></div>
+              <div class="swiper-button-prev category-nav-btn"></div>
             </div>
           </div>
-
-
+        </div> -->
 
       </div>
     </section>

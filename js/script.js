@@ -28,8 +28,9 @@ document.addEventListener('DOMContentLoaded', function() {
             slidesPerView: 1,
             spaceBetween: 30,
             navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
+                // Video slajder koristi .video-nav-btn
+                nextEl: '.video-nav-btn.swiper-button-next',
+                prevEl: '.video-nav-btn.swiper-button-prev',
             },
             // Prilagođavanje za različite veličine ekrana (da bude mock-up 3 slajda)
             breakpoints: {
@@ -47,13 +48,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 2. Inicijalizacija Slajdera Slika (za svaku kategoriju)
     document.querySelectorAll('.image-swiper').forEach(function(el) {
+        // Pronađi roditeljski omotač koji sadrži i swiper i dugmad
+        const parentWrapper = el.closest('.swiper-category-wrapper');
+        
         new Swiper(el, {
             loop: false,
             slidesPerView: 1,
             spaceBetween: 20,
             navigation: {
-                nextEl: el.querySelector('.swiper-button-next'),
-                prevEl: el.querySelector('.swiper-button-prev'),
+                // Koristi parentWrapper da pronađe dugmad sa specifičnom klasom .category-nav-btn
+                nextEl: parentWrapper.querySelector('.category-nav-btn.swiper-button-next'),
+                prevEl: parentWrapper.querySelector('.category-nav-btn.swiper-button-prev'),
             },
             breakpoints: {
                 768: {
@@ -127,7 +132,7 @@ imageModalElement.addEventListener('shown.bs.modal', function () {
         slidesPerView: 1,
         initialSlide: initialSlideIndex, // Prikazuje kliknutu sliku prvu
         navigation: {
-            nextEl: '.custom-swiper-modal-next', // Koristimo naše klase koje su definisane u HTML-u
+            nextEl: '.custom-swiper-modal-next', // Koristimo klase definisane za Modal u HTML-u
             prevEl: '.custom-swiper-modal-prev',
         },
         pagination: {

@@ -1,6 +1,6 @@
 /*
  * style.css
- * Prilagođeni stilovi za Elegant Namještaj (KOMPLETNA I ČISTA VERZIJA)
+ * Prilagođeni stilovi za Elegant Namještaj (RIJEŠENA VERZIJA)
  */
 
 /* =====================
@@ -211,7 +211,7 @@ h6 {
 }
 
 /* =======================================================
-   FINALNO RJEŠENJE: ČISTI KRUŽNI BRAON DUGMIĆI (BEZ IKONA)
+   STILOVI ZA SWIPER NAVIGACIJU (ČISTI KRUGOVI)
    ======================================================= */
 
 /* 1. STILIZACIJA KRUŽNOG DUGMETA (Roditeljski element) */
@@ -224,7 +224,7 @@ h6 {
   width: 45px !important;
   height: 45px !important;
 
-  /* Centriranje (iako nema sadržaja) */
+  /* Centriranje */
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
@@ -239,7 +239,7 @@ h6 {
   visibility: visible !important;
   opacity: 1.0 !important;
 
-  /* Boja teksta/ikone (nepotrebno, ali čisto) */
+  /* Uklanjamo boju ikona */
   color: transparent !important;
 }
 
@@ -253,52 +253,67 @@ h6 {
 .swiper-button-next:after,
 .swiper-button-prev:after,
 .swiper-button-next::before,
-/* Osiguravamo da se ::before NE VIDI */
 .swiper-button-prev::before {
-  /* Osiguravamo da se ::before NE VIDI */
   content: "" !important;
-  /* UKLANJAMO SAV SADRŽAJ */
   display: none !important;
-  /* Osiguravamo da se ne prikazuje */
   opacity: 0 !important;
   width: 0 !important;
   height: 0 !important;
 }
 
-/* ------------------------------------------- */
-/* OFSET POMJERANJE IZVAN SLIKA */
-/* ------------------------------------------- */
+/* =======================================================
+   FINANLNO RJEŠENJE ZA POZICIONIRANJE
+   ======================================================= */
 
-.image-swiper {
-  position: relative;
+/* 1. Otključavamo roditeljski kontejner za "visenje" elemenata */
+.container {
+  overflow: visible !important;
 }
 
-.image-swiper .swiper-button-prev {
+.swiper-category-wrapper {
+  overflow: visible !important;
+}
+
+/* 2. Ekstremno izgurivanje dugmadi za galeriju slika (category-nav-btn) */
+.category-nav-btn.swiper-button-prev {
   left: -20px !important;
+  /* Pozicioniranje van okvira */
+  right: auto !important;
 }
 
-.image-swiper .swiper-button-next {
+.category-nav-btn.swiper-button-next {
   right: -20px !important;
+  /* Pozicioniranje van okvira */
+  left: auto !important;
 }
 
-/* Pozicioniranje za video slider */
-.video-swiper .swiper-button-prev {
+/* 3. Pozicioniranje za video slider (video-nav-btn - ostaje bliže unutra) */
+.video-nav-btn.swiper-button-prev {
   left: 15px !important;
+  right: auto !important;
 }
 
-.video-swiper .swiper-button-next {
+.video-nav-btn.swiper-button-next {
   right: 15px !important;
+  left: auto !important;
 }
 
-@media (max-width: 768px) {
-  .image-swiper .swiper-button-prev {
+/* 4. Prilagodba za manje ekrane (Vraćamo ih unutra!) */
+@media (max-width: 992px) {
+  .category-nav-btn {
+    width: 35px !important;
+    height: 35px !important;
+  }
+
+  .category-nav-btn.swiper-button-prev {
     left: 5px !important;
   }
 
-  .image-swiper .swiper-button-next {
+  .category-nav-btn.swiper-button-next {
     right: 5px !important;
   }
 }
+
 
 /* =====================
    Stilovi za Modal (Pop-up)
