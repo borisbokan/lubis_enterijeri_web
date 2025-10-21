@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="bs">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galerija - Elegant Namještaj</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar-bg">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <img src="img/logo.png" alt="Elegant Namještaj Logo" height="50" class="company-logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Početna</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="usluge.html">Usluge</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="galerija.html">Galerija</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="kontakt.html">Kontakt</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="py-5 bg-light text-center">
+      <div class="container">
+        <h1 class="display-4 section-title mb-3">Naši Projekti i Radovi</h1>
+        <p class="lead text-muted">Vizualni pregled majstorstva u izradi namještaja po mjeri.</p>
+      </div>
+    </section>
+
+    <section class="py-5">
+      <div class="container">
+        <h2 class="section-title text-center mb-5">Video sa radovima</h2>
+
+        <div class="swiper video-swiper">
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+              <div class="ratio ratio-16x9 shadow-lg rounded">
+                <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" title="YouTube video player 1" frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen>
+                </iframe>
+              </div>
+              <div class="text-center mt-3">
+                <a href="https://www.youtube.com/channel/VAŠ_KANAL" target="_blank"
+                  class="btn custom-btn-secondary">Pogledaj na YouTube-u</a>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="ratio ratio-16x9 shadow-lg rounded">
+                <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" title="YouTube video player 2" frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen>
+                </iframe>
+              </div>
+              <div class="text-center mt-3">
+                <a href="https://www.youtube.com/channel/VAŠ_KANAL" target="_blank"
+                  class="btn custom-btn-secondary">Pogledaj na YouTube-u</a>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="ratio ratio-16x9 shadow-lg rounded">
+                <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" title="YouTube video player 3" frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen>
+                </iframe>
+              </div>
+              <div class="text-center mt-3">
+                <a href="https://www.youtube.com/channel/VAŠ_KANAL" target="_blank"
+                  class="btn custom-btn-secondary">Pogledaj na YouTube-u</a>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="swiper-button-next custom-swiper-next"></div>
+          <div class="swiper-button-prev custom-swiper-prev"></div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <section class="py-5 bg-light">
+      <div class="container">
+        <h2 class="section-title text-center mb-5">Galerija Slika Radova</h2>
+
+        <div class="mb-5">
+          <h3 class="category-title mb-4">Kuhinje</h3>
+          <div class="swiper image-swiper" data-category="Kuhinje">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <img src="slike/kuhinje/kuhinja1.jpg"
+                  data-full="slike/kuhinje/kuhinja1.jpg" alt="Moderna Kuhinja 1"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+              <div class="swiper-slide">
+                <img src="slike/kuhinje/kuhinja2.jpg"
+                  data-full="slike/kuhinje/kuhinja2.jpg" alt="Moderna Kuhinja 2"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+              <div class="swiper-slide">
+                <img src="slike/kuhinje/kuhinja3.jpg"
+                  data-full="slike/kuhinje/kuhinja3.jpg" alt="Moderna Kuhinja 3"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+              <div class="swiper-slide">
+                <img src="slike/kuhinje/kuhinja4.jpg"
+                  data-full="slike/kuhinje/kuhinja4.jpg" alt="Kuhinja 4"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+
+              <div class="swiper-slide">
+                <img src="slike/kuhinje/kuhinja5.jpg" data-full="slike/kuhinje/kuhinja5.jpg" alt="Kuhinja 4"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+
+            </div>
+            <div class="swiper-button-next custom-swiper-next-small"></div>
+            <div class="swiper-button-prev custom-swiper-prev-small"></div>
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <h3 class="category-title mb-4">Dnevni Boravci</h3>
+          <div class="swiper image-swiper" data-category="dnevni">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <img src="slike/boravak/boravak1.jpg"
+                  data-full="slike/boravak/boravak1.jpg" alt="Dnevni Boravak 1"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+              <div class="swiper-slide">
+                <img src="slike/boravak/boravak2.jpg"
+                  data-full="slike/boravak/boravak2.jpg" alt="Dnevni Boravak 2"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+              <div class="swiper-slide">
+                <img src="slike/boravak/boravak3.jpg" data-full="slike/boravak/boravak3.jpg" alt="Dnevni Boravak 3"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+              <div class="swiper-slide">
+                <img src="slike/boravak/boravak4.jpg" data-full="slike/boravak/boravak4.jpg" alt="Dnevni Boravak 4"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+              <div class="swiper-slide">
+                <img src="slike/boravak/boravak5.jpg" data-full="slike/boravak/boravak5.jpg" alt="Dnevni Boravak 5"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+            </div>
+            <div class="swiper-button-next custom-swiper-next-small"></div>
+            <div class="swiper-button-prev custom-swiper-prev-small"></div>
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <h3 class="category-title mb-4">Spavaće Sobe</h3>
+          <div class="swiper image-swiper" data-category="spavace">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <img src="slike/spavace_sobe/spavaca_soba1.jpg"
+                  data-full="slike/spavace_sobe/spavaca_soba1.jpg" alt="Spavaća Soba 1"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+              <div class="swiper-slide">
+                <img src="slike/spavace_sobe/spavaca_soba2.jpg"
+                  data-full="slike/spavace_sobe/spavaca_soba2.jpg" alt="Spavaća Soba 2"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+
+                <div class="swiper-slide">
+                  <img src="slike/spavace_sobe/spavaca_soba3.jpg" data-full="slike/spavace_sobe/spavaca_soba3.jpg" alt="Spavaća Soba 3"
+                    class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+                </div>
+
+                  <div class="swiper-slide">
+                    <img src="slike/spavace_sobe/spavaca_soba4.jpg" data-full="slike/spavace_sobe/spavaca_soba4.jpg" alt="Spavaća Soba 4"
+                      class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+                  </div>
+            </div>
+            <div class="swiper-button-next custom-swiper-next-small"></div>
+            <div class="swiper-button-prev custom-swiper-prev-small"></div>
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <h3 class="category-title mb-4">Dječije Sobe</h3>
+          <div class="swiper image-swiper" data-category="djecije">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <img src="slike/decije_sobe/decija1.jpg"
+                  data-full="slike/decije_sobe/decija1.jpg" alt="Dječija Soba 1"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+              <div class="swiper-slide">
+                <img src="slike/decije_sobe/decija2.jpg" data-full="slike/decije_sobe/decija2.jpg" alt="Dječija Soba 2"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+              <div class="swiper-slide">
+                <img src="slike/decije_sobe/decija3.jpg" data-full="slike/decije_sobe/decija3.jpg" alt="Dječija Soba 3"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+              <div class="swiper-slide">
+                <img src="slike/decije_sobe/decija4.jpg" data-full="slike/decije_sobe/decija4.jpg" alt="Dječija Soba 4"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+              </div>
+            </div>
+            <div class="swiper-button-next custom-swiper-next-small"></div>
+            <div class="swiper-button-prev custom-swiper-prev-small"></div>
+          </div>
+        </div>
+
+          <div class="mb-5">
+            <h3 class="category-title mb-4">Kancelarije</h3>
+            <div class="swiper image-swiper" data-category="kancelarije">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <img src="slike/kancelarija/office1.jpg" data-full="slike/kancelarija/office1.jpg" alt="Kancelarija 1"
+                    class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+                </div>
+                <div class="swiper-slide">
+                  <img src="slike/kancelarija/office2.jpg" data-full="slike/kancelarija/office2.jpg" alt="Kancelarija 2"
+                    class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+                </div>
+                <div class="swiper-slide">
+                <img src="slike/kancelarija/office3.jpg" data-full="slike/kancelarija/office3.jpg" alt="Kancelarija 3"
+                  class="img-fluid rounded hover-zoom gallery-thumb" onclick="openModal(this)">
+                </div>
+                <div class="swiper-slide">
+              
+              </div>
+              <div class="swiper-button-next custom-swiper-next-small"></div>
+              <div class="swiper-button-prev custom-swiper-prev-small"></div>
+            </div>
+          </div>
+
+
+
+      </div>
+    </section>
+
+  </main>
+
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content custom-modal-content">
+        <div class="modal-header border-0">
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-0">
+          <div class="swiper modal-swiper">
+            <div class="swiper-wrapper" id="modal-swiper-wrapper">
+            </div>
+            <div class="swiper-button-next custom-swiper-modal-next"></div>
+            <div class="swiper-button-prev custom-swiper-modal-prev"></div>
+            <div class="swiper-pagination custom-swiper-pagination"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-white py-4 custom-footer-bg">
+    <div class="container text-center">
+      <p>&copy; 2025 FLUBO. Sva prava zadržana.</p>
+      <div class="social-icons">
+        <a href="#" class="text-white me-3">Facebook</a> |
+        <a href="#" class="text-white me-3">Instagram</a> |
+        <a href="kontakt.html" class="text-white">Kontakt</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+  <script src="js/script.js"></script>
+</body>
+
+</html>

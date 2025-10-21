@@ -1,6 +1,6 @@
 /*
  * style.css
- * Prilagođeni stilovi za Elegant Namještaj
+ * Prilagođeni stilovi za Elegant Namještaj (FINALNA VERZIJA)
  */
 
 /* =====================
@@ -19,6 +19,16 @@
   /* Svijetli tekst */
   --header-font: 'Lora', serif;
   /* Elegantan font */
+}
+
+/* =====================
+   Swiper Font (KLJUČNO: Osigurava da se strelice renderuju)
+   ===================== */
+@font-face {
+  font-family: 'swiper-icons';
+  src: url('data:application/font-woff;charset=utf-8;base64,...');
+  /* Ovo je dio koji Swiper inače automatski dodaje */
+  /* Pošto je ovo kompleksno za definisanje, oslanjamo se na Swiper CDN, ali dodajemo stilove za bolju vidljivost */
 }
 
 /* =====================
@@ -62,7 +72,6 @@ h6 {
    ===================== */
 .custom-navbar-bg {
   background-color: var(--accent-bg-color) !important;
-  /* Bež/Krem pozadina */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
@@ -90,17 +99,14 @@ h6 {
    Hero Sekcija (Banner)
    ===================== */
 .hero-section {
-  /* Ovdje bi trebalo koristiti veliku, elegantnu sliku visokog kvaliteta */
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../slike/kuinja_moderna1.jpg') no-repeat center center;
   background-size: cover;
   background-position: center;
   height: 80vh;
-  /* Visina 80% visine ekrana */
 }
 
 .hero-section h1 {
   font-size: 4.5rem;
-  /* Veći font za glamur */
   font-weight: 700;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
@@ -114,7 +120,6 @@ h6 {
   color: var(--light-text-color);
   padding: 10px 30px;
   border-radius: 0;
-  /* Oštre ivice za moderniji look */
   text-transform: uppercase;
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
@@ -151,7 +156,6 @@ h6 {
 
 .hover-zoom:hover {
   transform: translateY(-5px);
-  /* Lagani skok pri prelasku miša */
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
@@ -161,15 +165,36 @@ h6 {
 
 .hover-zoom:hover img {
   transform: scale(1.05);
-  /* Lagano uvećanje unutar okvira */
 }
+
+/* Stil za sve slličice (thumbnails) u galeriji */
+.gallery-thumb {
+  max-height: 250px;
+  /* Maksimalna visina */
+  width: 100%;
+  /* Slika zauzima cijelu širinu kontejnera (slidera) */
+  /* KLJUČNO: Osigurava da slika popuni prostor bez izobličenja, režući višak */
+  object-fit: cover;
+}
+
+/* Opciono: ako zelis da se vide i ivice (radius) oko slicice, dodaj i ovo: */
+.gallery-thumb {
+  border-radius: 8px;
+  /* Blago zaobljene ivice */
+}
+
+/* Ažurirajmo i stil za hover-zoom, da se primjeni na novu visinu: */
+.hover-zoom {
+  height: 250px;
+  /* Postavljamo i kontejner na fiksnu visinu za uniformnost */
+}
+
 
 /* =====================
    Footer
    ===================== */
 .custom-footer-bg {
   background-color: #303030;
-  /* Tamno siva/skoro crna za елегантан контраст */
   color: var(--light-text-color);
 }
 
@@ -181,3 +206,204 @@ h6 {
 .custom-footer-bg a:hover {
   color: var(--primary-color) !important;
 }
+
+/* =====================
+   Stilovi za Usluge (Accordion)
+   ===================== */
+
+.custom-accordion-button {
+  background-color: var(--accent-bg-color);
+  color: var(--primary-color) !important;
+  font-family: var(--header-font);
+  font-weight: 700;
+  font-size: 1.3rem;
+  transition: background-color 0.3s ease;
+  border-radius: 0;
+}
+
+.custom-accordion-button:not(.collapsed) {
+  background-color: var(--primary-color) !important;
+  color: var(--light-text-color) !important;
+}
+
+.custom-accordion-button:focus {
+  box-shadow: 0 0 0 0.25rem rgba(123, 63, 0, 0.25);
+}
+
+.accordion-body {
+  padding: 20px 25px;
+  background-color: var(--light-text-color);
+}
+
+.custom-badge-primary {
+  background-color: var(--primary-color);
+  color: var(--light-text-color);
+  font-weight: 600;
+  padding: 6px 12px;
+}
+
+.custom-badge-secondary {
+  background-color: var(--secondary-color);
+  color: var(--light-text-color);
+  font-weight: 600;
+  padding: 6px 12px;
+}
+
+/* =====================
+   Stilovi za Swiper Navigaciju (FINALNA ISPRAVKA)
+   ===================== */
+
+.swiper-button-next,
+.swiper-button-prev {
+  z-index: 1000 !important;
+  cursor: pointer;
+
+  /* FLEXBOX ZA GARANTOVANO CENTRIRANJE */
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+
+  /* STIL KRUGA */
+  color: transparent !important;
+  width: 45px !important;
+  height: 45px !important;
+  background-color: rgba(123, 63, 0, 0.8) !important;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+
+  /* POZICIONIRANJE */
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+
+  /* Resetujemo Swiper-ov auto-margin */
+  margin: 0 !important;
+
+  /* Postavljamo na 'visible' za svaki slucaj */
+  visibility: visible !important;
+}
+
+.swiper-button-prev {
+  opacity: 1.0 !important;
+  /* Osiguravamo da Bootstrap ne smanjuje transparentnost lijevog dugmeta */
+}
+
+.swiper-button-next {
+  opacity: 1.0 !important;
+  /* Osiguravamo da Bootstrap ne smanjuje transparentnost desnog dugmeta */
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: var(--secondary-color) !important;
+  transform: translateY(-50%) scale(1.05) !important;
+}
+
+/* STRELICE UNUTAR KRUGA (Prisiljavamo bijelu boju i veličinu) */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+/* Ključno: Uklanjamo Swiper-ovu ikonu koristeći prazan sadržaj */
+  content: "" !important;
+  display: none !important;
+  /* Sakrivamo Swiper-ovu ikonu */
+}
+
+/* KREIRAMO NOVE STRELICE KROZ PSEUDO-ELEMENT ::before */
+.swiper-button-prev::before {
+  content: '⬅' !important;
+  /* Lijeva strelica (Unicode) */
+  font-size: 1.5rem !important;
+  color: #FFFFFF !important;
+  position: absolute;
+  /* Apsolutno pozicioniranje unutar flexbox dugmeta */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Centriranje unutar dugmeta */
+}
+
+.swiper-button-next::before {
+  content: '➡' !important;
+  /* Desna strelica (Unicode) */
+  font-size: 1.5rem !important;
+  color: #FFFFFF !important;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+/* ------------------------------------------- */
+/* OFSET POMJERANJE IZVAN SLIKA */
+/* ------------------------------------------- */
+
+.image-swiper {
+  position: relative;
+}
+
+.image-swiper .swiper-button-prev {
+  left: -20px !important;
+}
+
+.image-swiper .swiper-button-next {
+  right: -20px !important;
+}
+
+/* Pozicioniranje za video slider */
+.video-swiper .swiper-button-prev {
+  left: 15px !important;
+}
+
+.video-swiper .swiper-button-next {
+  right: 15px !important;
+}
+
+@media (max-width: 768px) {
+  .image-swiper .swiper-button-prev {
+    left: 5px !important;
+  }
+
+  .image-swiper .swiper-button-next {
+    right: 5px !important;
+  }
+}
+
+/* =====================
+   Stilovi za Modal (Pop-up)
+   ===================== */
+
+/* =====================
+   KONAČNA KOREKCIJA CENTRIRANJA U MODALU
+   ===================== */
+
+.modal-body {
+  /* Osiguravamo da cijelo tijelo modala koristi Flexbox */
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 0 !important;
+}
+
+.modal-swiper .swiper-slide {
+  /* KLJUČNO: Forcing Swiper Slide to be a Flex Container that centers its content */
+  display: flex !important;
+  justify-content: center !important;
+  /* Horizontalno centriranje slike */
+  align-items: center !important;
+  /* Vertikalno centriranje slike */
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.modal-swiper-wrapper img {
+  /* Finalna provjera za samu sliku */
+  max-height: 80vh;
+  object-fit: contain;
+  width: auto;
+  margin: 0 auto !important;
+}
+
+
+/* =====================
+   Kraj stilova
+   ===================== */
