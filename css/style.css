@@ -361,41 +361,46 @@ h6 {
 
 
 /* =======================================================
-   KOREKCIJE ZA MOBILNI PRIKAZ (index.html)
+   FINALNE KOREKCIJE ZA MOBILNI PRIKAZ (index.html)
    ======================================================= */
 
 @media (max-width: 767px) {
 
-  /* 1. KOREKCIJA HERO SEKCIJE */
+  /* 1. KOREKCIJA HERO SEKCIJE (Osigurava da se sve vidi) */
   .hero-section {
-    height: 70vh;
-    /* Malo manja visina za bolje uklapanje sadržaja */
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    /* Mijenjamo visinu iz vh u fiksnije rješenje sa paddingom */
+    height: auto !important;
+    min-height: 60vh;
+    /* Osiguravamo minimum visine */
+    padding-top: 5rem !important;
+    /* Agresivni padding na vrhu */
+    padding-bottom: 5rem !important;
+    /* Agresivni padding na dnu */
   }
 
-  /* Smanjivanje glavnog naslova H1 */
+  /* Agresivno smanjivanje glavnog naslova H1 na mobilnom */
   .hero-section h1 {
-    font-size: 2.2rem !important;
-    /* Drastično smanjujemo font */
+    font-size: 2rem !important;
+    /* Još manje! */
+    line-height: 1.2 !important;
     margin-bottom: 0.5rem !important;
-    /* Smanjujemo razmak između redova naslova */
   }
 
   /* Smanjivanje podnaslova (lead) */
   .hero-section .lead {
-    font-size: 0.95rem;
-    margin-bottom: 2rem !important;
+    font-size: 1rem !important;
+    margin-bottom: 2.5rem !important;
   }
 
-  /* 2. KOREKCIJA PREKLAPANJA - Dodavanje razmaka iznad prve sekcije nakon heroja */
+  /* 2. KOREKCIJA PREKLAPANJA - Dodatni razmak IZNAD sekcije "Ko smo mi" */
   /* Targetiramo prvu sekciju nakon heroja koja ima klasu .py-5 */
   main section:nth-child(2) {
-    margin-top: 1rem;
-    /* Dodatni razmak da se osigura da nema preklapanja */
+    /* Dodatni, veliki margin-top da ne bi visilo preko dugmeta */
+    margin-top: 3rem !important;
+    padding-top: 2rem !important;
+    /* Smanjujemo top padding sekcije */
   }
 
-  /* Prilagođavamo veličinu sekcije Ko smo mi sliku na mobilnom */
   .section-title {
     font-size: 2rem;
   }
