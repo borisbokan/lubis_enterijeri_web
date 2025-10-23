@@ -316,40 +316,88 @@ section.py-5 .container a {
 }
 
 
-/* =====================
-   Lightbox (Pop-up za slike)
-   ===================== */
+/* =======================================================
+   Lightbox (Pop-up za slike na index.html) - FINALNI FIKS ZA CENTRIRANJE
+   ======================================================= */
 .lightbox {
   display: none;
   position: fixed;
-  z-index: 9999;
+  z-index: 999999 !important;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.9);
-  /* Crna prozirna pozadina ostaje */
-  text-align: center;
+  background-color: rgba(0, 0, 0, 0.9) !important;
+
+  /* KLJUČNO: Koristimo Flexbox za centralно позиционирање садржаја */
+ 
+  flex-direction: column !important;
+  /* Vertikalni tok */
+  justify-content: center !important;
+  /* Centriraj vertikalno */
+  align-items: center !important;
+  /* Centriraj horizontalno */
+  overflow-y: auto !important;
+  /* Дозволи скроловање ако је потребно */
+  padding: 20px !important;
 }
 
 .lightbox-content {
-  /* ... (stilovi ostaju isti) ... */
-  margin: auto;
-  display: block;
-  max-width: 900px;
-  max-height: 85vh;
-  object-fit: contain;
-  margin-top: 5vh;
+  /* Centriranje same slike */
+  display: block !important;
+  margin: 0 auto !important;
+  /* Horizontalno centriranje */
+
+  width: auto !important;
+  max-width: 90% !important;
+  /* Širina slike */
+  max-height: 90vh !important;
+  /* Visina slike */
+  object-fit: contain !important;
+  padding: 0 !important;
 }
 
-.lightbox-caption,
-.lightbox-close,
+.lightbox-caption {
+  margin: 15px auto !important;
+  display: block !important;
+  width: 90% !important;
+  max-width: 700px !important;
+  text-align: center !important;
+  color: #ccc !important;
+  padding: 10px 0 !important;
+}
+
+/* Stilovi za navigacione dugmiće (PREV/NEXT) */
 .lightbox-prev,
 .lightbox-next {
-  /* Ovi elementi ostaju beli/svetli radi kontrasta na crnoj pozadini pop-up-a */
-  color: #fff;
-  /* ... (ostali stilovi ostaju isti) ... */
+  cursor: pointer !important;
+  position: absolute !important;
+  top: 50% !important;
+  padding: 16px !important;
+  margin-top: -22px !important;
+  color: white !important;
+  font-size: 30px !important;
+  user-select: none !important;
+  z-index: 100000 !important;
+}
+
+.lightbox-prev {
+  left: 20px !important;
+}
+
+.lightbox-next {
+  right: 20px !important;
+}
+
+.lightbox-close {
+  display: none;
+  position: absolute !important;
+  top: 20px !important;
+  right: 35px !important;
+  color: #fff !important;
+  font-size: 40px !important;
+  cursor: pointer !important;
+  z-index: 100000 !important;
 }
 
 
@@ -393,6 +441,69 @@ footer {
   position: relative;
   z-index: 10;
   /* Osigurava da je iznad bilo kakvih 'isplivalih' elemenata */
+}
+
+/* =======================================================
+   OBAVEZNI FIKS ZA CENTRIRANJE SLIKA U MODALU (galerija.html)
+   Dodati na kraj style.css
+   ======================================================= */
+
+/* 1. Ciljamo Modal Body (roditelj Swipera) */
+.modal-body {
+  /* Uklanjamo paddinge i postavljamo crnu pozadinu za kontras */
+  padding: 0 !important;
+  background-color: rgba(0, 0, 0, 0.9) !important;
+}
+
+/* 2. Ciljamo pojedinačni Swiper Slide (kontejner slike) */
+.modal-swiper .swiper-slide {
+  /* Koristimo Flexbox za centralno pozicioniranje sadržaja (slike) */
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  /* Vertikalno centriranje */
+  align-items: center !important;
+  /* Horizontalno centriranje */
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* 3. Ciljamo samu sliku (koja je unutar Swiper Wrapper-a) */
+.modal-swiper-wrapper img {
+  /* Ograničavamo veličinu i osiguravamo centriranje */
+  max-height: 85vh !important;
+  /* Maksimalna visina */
+  max-width: 90% !important;
+  /* Maksimalna širina */
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  /* Osigurava da se cela slika vidi */
+  margin: 0 auto !important;
+  /* Dodatno osigurava centriranje */
+}
+
+/* 4. Stil za natpis/caption (ako postoji) */
+.swiper-slide-caption {
+  color: #ffffff !important;
+  padding: 10px 20px !important;
+  text-align: center !important;
+}
+
+/* 5. Navigacione strelice unutar Modala (moraju biti svetle na tamnoj pozadini) */
+.modal-swiper .swiper-button-next,
+.modal-swiper .swiper-button-prev {
+  color: #ffffff !important;
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.7));
+  /* Sjena da se bolje vide */
+  background-color: transparent !important;
+  /* Uklanjamo boju pozadine strelica */
+}
+
+.modal-swiper .swiper-button-next:hover,
+.modal-swiper .swiper-button-prev:hover {
+  color: var(--primary-color) !important;
+  /* Akcenat boja na hover */
 }
 
 /* ... (Media queries ostaju isti) ... */
