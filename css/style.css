@@ -506,4 +506,69 @@ footer {
   /* Akcenat boja na hover */
 }
 
+/* =======================================================
+   FINALNE KOREKCIJE ZA MOBILNI PRIKAZ (FINAL VERSION)
+   ======================================================= */
+
+@media (max-width: 767px) {
+
+  /* 1. KOREKCIJA HERO SEKCIJE (Smanjivanje naslova) */
+  .hero-section {
+    /* Održavamo minimalnu visinu i padding */
+    height: auto !important;
+    min-height: 60vh;
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important;
+  }
+
+  .hero-section h1 {
+    /* KLJUČNO: Značajno smanjujemo H1 naslov na mobilnom */
+    font-size: 2rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .hero-section .lead {
+    font-size: 1rem !important;
+    margin-bottom: 3rem !important;
+  }
+
+  /* 2. KOREKCIJA PREKLAPANJA DUGMETA */
+
+  /* UKLANJAMO SVU AGRESIVNU MARGINU/POZICIONIRANJE SA DUGMETA */
+  .hero-section .custom-btn-primary {
+    /* Uklanjamo bilo kakav z-index i position: relative koji bi mogli smetati */
+    z-index: auto !important;
+    position: static !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* KOREKCIJA PREKLAPANJA SEKCIJA */
+  /* Osiguravamo da prva sekcija (Ko smo mi?) počinje nakon hero sekcije, bez preklapanja */
+  main section:nth-child(2) {
+    margin-top: 0 !important;
+    padding-top: 3rem !important;
+    /* Standardni razmak od vrha */
+  }
+
+  /* Smanjujemo ostale naslove */
+  .section-title {
+    font-size: 2rem;
+  }
+
+  /* Smanjujemo veličinu navigacionih dugmadi na manjim ekranima */
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 35px !important;
+    height: 35px !important;
+  }
+
+  /* KOREKCIJA ZA NAVIGACIJU (MENU) PREKLAPANJE */
+  /* Ako se nav menu preklapa, osiguravamo da ima visok z-index */
+  .navbar {
+    z-index: 1050;
+    /* Standardni Bootstrap z-index za navigaciju */
+  }
+}
+
 /* ... (Media queries ostaju isti) ... */
