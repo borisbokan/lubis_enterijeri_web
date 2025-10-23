@@ -2,10 +2,10 @@
 (function () {
     'use strict'
 
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    // Dohvati sve forme kojima želimo da primenimo prilagođene Bootstrap stilove validacije
     var forms = document.querySelectorAll('.needs-validation')
 
-    // Loop over them and prevent submission
+    // Prođi kroz forme i spreči slanje ako nisu validne
     Array.prototype.slice.call(forms)
         .forEach(function (form) {
             form.addEventListener('submit', function (event) {
@@ -18,6 +18,10 @@
             }, false)
         })
 })()
+
+// ===================================
+// INICIJALIZACIJA SLIDERA I LIGHTBOXA
+// ===================================
 
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -32,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 nextEl: '.video-nav-btn.swiper-button-next',
                 prevEl: '.video-nav-btn.swiper-button-prev',
             },
-            // Prilagođavanje za različite veličine ekrana (da bude mock-up 3 slajda)
+            // Prilagođavanje za različite veličine ekrana
             breakpoints: {
                 768: {
                     slidesPerView: 2,
@@ -46,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // 2. Inicijalizacija Slajdera Slika (za svaku kategoriju)
+    // 2. Inicijalizacija Slajdera Slika (za svaku kategoriju u Galeriji)
     document.querySelectorAll('.image-swiper').forEach(function(el) {
         // Pronađi roditeljski omotač koji sadrži i swiper i dugmad
         const parentWrapper = el.closest('.swiper-category-wrapper');
@@ -73,11 +77,61 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // 3. JEDNOSTAVNI LIGHTBOX ZA SLIKE NA HOME/INDEX STRANICI
+    // (Koristi HTML strukturu sa ID="lightbox")
+    
+    // Selektuje sve stavke koje treba da se otvore u Lightbox-u, uključujući
+    // .portfolio-item (za index.html) i .gallery-item (za gallery.html, ako nisu u swiperu)
+    const simpleLightboxItems = document.querySelectorAll('.portfolio-item'); 
+
+    const lightbox = document.getElementById('lightbox'); 
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const lightboxClose = document.querySelector('.lightbox-close');
+    const lightboxPrev = document.querySelector('.lightbox-prev');
+    const lightboxNext = document.querySelector('.lightbox-next');
+
+    if (lightbox) {
+        simpleLightboxItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // 1. Dohvatanje podataka sa <a> taga
+                const src = this.getAttribute('data-src');
+                const caption = this.getAttribute('data-caption');
+                
+                // 2. Prikazivanje slike i natpisa
+                lightboxImg.src = src;
+                lightboxCaption.textContent = caption;
+                
+                // 3. Otvaranje Lightbox-a
+                lightbox.style.display = 'block';
+                document.body.style.overflow = 'hidden'; 
+            });
+        });
+
+        // Zatvaranje Lightbox-a
+        lightboxClose.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = '';
+        });
+        
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Sakrivamo prev/next dugmad jer je ovo jednostavan (non-swiper) Lightbox
+        if (lightboxPrev) lightboxPrev.style.display = 'none';
+        if (lightboxNext) lightboxNext.style.display = 'none';
+    }
 });
 
 
 // ===================================
-// FUNKCIONALNOST MODALNOG PROZORA
+// FUNKCIONALNOST SWIPER MODALNOG PROZORA (za Gallery.html)
 // ===================================
 
 let modalSwiper = null;
@@ -85,9 +139,12 @@ const imageModalElement = document.getElementById('imageModal'); // Dohvati moda
 
 // 1. Definišemo funkciju openModal
 window.openModal = function(clickedImage) {
-    // ... (OSTATAK openModal KODA: Traženje slika, punjenje modalWrapper-a) ...
-
+    
+    // Dohvatamo elemente potrebne za popunjavanje modala
     const categoryDiv = clickedImage.closest('.image-swiper');
+    
+    // Selektujemo sve IMG elemente sa klasom gallery-thumb
+    // (Pazimo da koristimo element koji sadrži data-full atribut)
     const categoryImages = categoryDiv.querySelectorAll('.gallery-thumb');
     const modalWrapper = document.getElementById('modal-swiper-wrapper');
 
@@ -97,13 +154,22 @@ window.openModal = function(clickedImage) {
     // 2. Dinamičko popunjavanje modala svim slikama iz iste kategorije
     let initialSlideIndex = 0;
     categoryImages.forEach((img, index) => {
-        const fullSrc = img.getAttribute('data-full');
+        // Koristimo data-full za veliku sliku i data-caption sa roditeljskog <a> taga
+        const fullSrc = img.getAttribute('data-full'); 
+        const parentLink = img.closest('a'); // Dohvati roditeljski <a> tag
+        const caption = parentLink ? parentLink.getAttribute('data-caption') : ''; // Dohvati natpis
+        
         const slide = document.createElement('div');
         slide.classList.add('swiper-slide');
         
-        slide.innerHTML = `<img src="${fullSrc}" class="img-fluid" alt="Uvećana slika">`;
+        // Dodajemo i natpis ispod slike unutar slajda u Modalu
+        slide.innerHTML = `
+            <img src="${fullSrc}" class="img-fluid" alt="Uvećana slika">
+            <p class="modal-caption-text">${caption}</p>
+        `;
         modalWrapper.appendChild(slide);
 
+        // Određivanje koja je slika kliknuta
         if (img === clickedImage) {
             initialSlideIndex = index;
         }
@@ -132,7 +198,7 @@ imageModalElement.addEventListener('shown.bs.modal', function () {
         slidesPerView: 1,
         initialSlide: initialSlideIndex, // Prikazuje kliknutu sliku prvu
         navigation: {
-            nextEl: '.custom-swiper-modal-next', // Koristimo klase definisane za Modal u HTML-u
+            nextEl: '.custom-swiper-modal-next', 
             prevEl: '.custom-swiper-modal-prev',
         },
         pagination: {
