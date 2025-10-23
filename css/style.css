@@ -27,8 +27,8 @@
    ===================== */
 body {
   font-family: Arial, sans-serif;
-  color: var(--dark-text-color);
-  background-color: var(--light-text-color);
+  color: var(--light-text-color);
+background-color: var(--dark-bg-color);
 }
 
 h1,
@@ -39,6 +39,7 @@ h5,
 h6 {
   font-family: var(--header-font);
   font-weight: 700;
+  color: var(--primary-color);
 }
 
 .section-title {
@@ -411,6 +412,138 @@ h6 {
   .section-title {
     font-size: 2rem;
   }
+}
+
+/* ----------------------------------------------------------------
+   6. SERVICES PAGE STYLES (NOVO)
+---------------------------------------------------------------- */
+
+.services-list-section {
+  /* КОРЕКЦИЈА 1: Позадина секције је сада скроз БИЈЕЛА */
+    background-color: var(--light-text-color);
+    position: relative;
+    z-index: 1;
+}
+
+.services-group-container {
+  display: grid;
+  /* 3 колоне за десктоп */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-top: 50px;
+}
+
+.service-group {
+  padding: 30px;
+    /* КОРЕКЦИЈА 2: Позадина групе је такође БИЈЕЛА */
+    background-color: var(--light-text-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.service-group:hover {
+  transform: translateY(-5px);
+}
+
+.group-title {
+font-size: 1.6rem;
+  /* КОРЕКЦИЈА 3: Наслов групе је у ПРИМАРНОЈ боји (Метална сива) */
+  color: var(--primary-color);
+  margin-bottom: 25px;
+  /* Користимо тамну боју за линију */
+  border-bottom: 2px solid var(--dark-text-color);
+  padding-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.service-details-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.service-details-list li {
+  font-size: 1.1rem;
+    padding: 10px 0;
+    /* КОРЕКЦИЈА 4: Текст је сада ТАМНО СИВ */
+    color: var(--dark-text-color);
+    /* Линија је такође тамна */
+    border-bottom: 1px dashed var(--secondary-color);
+}
+
+.service-details-list li:last-child {
+  border-bottom: none;
+}
+
+.service-details-list li i {
+  /* Иконе остају у primary boji */
+    color: var(--primary-color);
+    margin-right: 10px;
+}
+
+/* Стил за CTA дугме */
+.call-to-action-box {
+  margin-top: 70px;
+    padding: 40px 20px;
+    /* Користимо неку од тамних боја из палете (нпр. #2A2A2A) */
+    background-color: var(--light-bg-color);
+    border-radius: 10px;
+}
+
+.cta-text {
+/* Текст у CTA боксу је СВЕТАО */
+  color: var(--light-text-color);
+  margin-bottom: 20px;
+}
+
+/* RESPONSIVE DIZAJN ZA TELEFONE */
+@media (max-width: 992px) {
+  .services-group-container {
+    /* 2 колоне на мањим екранима */
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .services-group-container {
+    /* 1 колона на мобилном */
+    grid-template-columns: 1fr;
+  }
+
+  .service-group {
+    padding: 20px;
+  }
+}
+
+/* =====================
+   Dugmad (AŽURIRANO ZA CTA)
+   ===================== */
+
+/* Stil za CTA dugme u tamnoj temi */
+.btn-cta {
+  /* Pozadina je Primarna boja (Metalik Siva) */
+  background-color: var(--primary-color);
+  /* Okvir je takođe Primarna boja */
+  border: 2px solid var(--primary-color);
+  /* Tekst je svetao (Tamni elementi treba da imaju svetao tekst) */
+  color: var(--dark-text-color);
+
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+  display: inline-block;
+}
+
+.btn-cta:hover {
+  /* Hover je Tamnija Metalik Siva */
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: var(--dark-text-color);
+  text-decoration: none;
 }
 /* =====================
    Kraj stilova
