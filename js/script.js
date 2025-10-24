@@ -214,21 +214,217 @@ const WORKER_ENDPOINT = "https://forma-mail-handler-temp-a24.borisbokan.workers.
 // ===================================
 // HANDLER ZA SLANJE FORME KROZ CLOUDFLARE WORKER
 // ===================================
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+    'use strict'
+    // Dohvati sve forme kojima želimo da primenimo prilagođene Bootstrap stilove validacije
+    var forms = document.querySelectorAll('.needs-validation')
+    // Prođi kroz forme i spreči slanje ako nisu validne
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+})()
+
+// ===================================
+// INICIJALIZACIJA SLIDERA I LIGHTBOXA (Ostavljamo neizmenjeno)
+// ===================================
 
 document.addEventListener('DOMContentLoaded', function() {
+    
+    // 1. Inicijalizacija Video Slajdera
+    if (document.querySelector('.video-swiper')) {
+        new Swiper('.video-swiper', {
+            loop: false,
+            slidesPerView: 1,
+            spaceBetween: 30,
+            navigation: {
+                nextEl: '.video-nav-btn.swiper-button-next',
+                prevEl: '.video-nav-btn.swiper-button-prev',
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                },
+            }
+        });
+    }
+
+    // 2. Inicijalizacija Slajdera Slika
+    document.querySelectorAll('.image-swiper').forEach(function(el) {
+        const parentWrapper = el.closest('.swiper-category-wrapper');
+        
+        new Swiper(el, {
+            loop: false,
+            slidesPerView: 1,
+            spaceBetween: 20,
+            navigation: {
+                nextEl: parentWrapper.querySelector('.category-nav-btn.swiper-button-next'),
+                prevEl: parentWrapper.querySelector('.category-nav-btn.swiper-button-prev'),
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 15,
+                },
+                992: {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                },
+            }
+        });
+    });
+
+    // 3. JEDNOSTAVNI LIGHTBOX ZA SLIKE NA HOME/INDEX STRANICI
+    const simpleLightboxItems = document.querySelectorAll('.portfolio-item'); 
+    const lightbox = document.getElementById('lightbox'); 
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const lightboxClose = document.querySelector('.lightbox-close');
+    const lightboxPrev = document.querySelector('.lightbox-prev');
+    const lightboxNext = document.querySelector('.lightbox-next');
+
+    if (lightbox) {
+        simpleLightboxItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const src = this.getAttribute('data-src');
+                const caption = this.getAttribute('data-caption');
+                lightboxImg.src = src;
+                lightboxCaption.textContent = caption;
+                lightbox.style.display = 'block';
+                document.body.style.overflow = 'hidden'; 
+            });
+        });
+
+        lightboxClose.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = '';
+        });
+        
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+        
+        if (lightboxPrev) lightboxPrev.style.display = 'none';
+        if (lightboxNext) lightboxNext.style.display = 'none';
+    }
+});
+
+
+// ===================================
+// FUNKCIONALNOST SWIPER MODALNOG PROZORA (za Gallery.html) (Ostavljamo neizmenjeno)
+// ===================================
+
+let modalSwiper = null;
+const imageModalElement = document.getElementById('imageModal'); 
+
+window.openModal = function(clickedImage) {
+    
+    const categoryDiv = clickedImage.closest('.image-swiper');
+    const categoryImages = categoryDiv.querySelectorAll('.gallery-thumb');
+    const modalWrapper = document.getElementById('modal-swiper-wrapper');
+
+    modalWrapper.innerHTML = '';
+    
+    let initialSlideIndex = 0;
+    categoryImages.forEach((img, index) => {
+        const fullSrc = img.getAttribute('data-full'); 
+        const parentLink = img.closest('a');
+        const caption = parentLink ? parentLink.getAttribute('data-caption') : '';
+        
+        const slide = document.createElement('div');
+        slide.classList.add('swiper-slide');
+        
+        slide.innerHTML = `
+            <img src="${fullSrc}" class="img-fluid" alt="Uvećana slika">
+            <p class="modal-caption-text">${caption}</p>
+        `;
+        modalWrapper.appendChild(slide);
+
+        if (img === clickedImage) {
+            initialSlideIndex = index;
+        }
+    });
+
+    const imageModal = new bootstrap.Modal(imageModalElement);
+    imageModal.show();
+    
+    imageModalElement.setAttribute('data-initial-slide', initialSlideIndex);
+}
+
+imageModalElement.addEventListener('shown.bs.modal', function () {
+    const initialSlideIndex = parseInt(this.getAttribute('data-initial-slide') || 0);
+
+    if (modalSwiper !== null) {
+        modalSwiper.destroy(true, true);
+    }
+    
+    modalSwiper = new Swiper('.modal-swiper', {
+        loop: true, 
+        slidesPerView: 1,
+        initialSlide: initialSlideIndex, 
+        navigation: {
+            nextEl: '.custom-swiper-modal-next', 
+            prevEl: '.custom-swiper-modal-prev',
+        },
+        pagination: {
+            el: '.custom-swiper-pagination',
+            type: 'fraction', 
+        },
+    });
+});
+
+
+
+// ===================================
+// HANDLER ZA SLANJE FORME KROZ CLOUDFLARE WORKER (FIKSIRANO)
+// ===================================
+
+document.addEventListener('DOMContentLoaded', function () {
+    
+    // URL вашег Cloudflare Worker-а - PROVERITE DA LI JE ISPRAVAN!
+    const WORKER_ENDPOINT = "https://forma-mail-handler-temp-a24.borisbokan.workers.dev/";
+    // Da bi se osiguralo da se forma i formMessage pronađu
     const form = document.getElementById('contactForm');
-    const formMessage = document.getElementById('formMessage');
+    const formMessage = document.getElementById('formMessage'); 
 
     if (form) {
+        // Dodajemo preventDefault i event.stopPropagation i ovde, za svaki slučaj
         form.addEventListener('submit', function(e) {
-            e.preventDefault(); // Заустави стандардно слање форме
+            e.preventDefault(); 
+            e.stopPropagation();
+
+            // Ako Bootstrap validacija prođe, nastavljamo sa slanjem Workeru
+            if (!form.checkValidity()) {
+                 // Ako validacija ne prođe, Bootstrap će prikazati poruke
+                return;
+            }
 
             formMessage.textContent = 'Šaljem poruku...';
-            formMessage.style.color = '#E4B93F'; // Zlatna boja
+            formMessage.style.color = '#E4B93F'; 
 
-           
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
+            // KRITIČNO: Ručno prikupljanje podataka - ovo je najpouzdanije!
+            const data = {
+                // Koristimo querySelector da direktno uzmemo vrednosti
+                ime: form.querySelector('[name="ime"]').value,
+                email: form.querySelector('[name="email"]').value,
+                poruka: form.querySelector('[name="poruka"]').value
+            };
 
             fetch(WORKER_ENDPOINT, {
                 method: 'POST',
@@ -237,20 +433,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 body: JSON.stringify(data),
             })
+            // Ažuriran .then da bolje čita greške od Worker-a
             .then(response => {
                 if (response.ok) {
                     return response.json();
                 }
-                throw new Error('Došlo je do greške na serveru.');
+                // Ako Worker vrati 400 ili 500, response.json() će pročitati poruku greške
+                return response.json().then(errorData => {
+                    throw new Error(errorData.message || 'Došlo je do nepoznate greške na serveru.');
+                });
             })
             .then(result => {
                 formMessage.textContent = 'Poruka uspešno poslata! Hvala Vam.';
                 formMessage.style.color = 'green';
-                form.reset(); // Obriši polja forme
+                form.reset(); 
             })
             .catch(error => {
                 formMessage.textContent = 'Greška pri slanju: ' + error.message;
-                formMessage.style.color = '#E2402A'; // Crvena boja
+                formMessage.style.color = '#E2402A';
             });
         });
     }
