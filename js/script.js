@@ -330,10 +330,12 @@ document.addEventListener('DOMContentLoaded', function() {
 // FUNKCIONALNOST SWIPER MODALNOG PROZORA (za Gallery.html) (Ostavljamo neizmenjeno)
 // ===================================
 
-let modalSwiper = null;
-const imageModalElement = document.getElementById('imageModal'); 
 
-window.openModal = function(clickedImage) {
+
+window.openModal = function (clickedImage) {
+    
+    let modalSwiper = null;
+const imageModalElement = document.getElementById('imageModal'); 
     
     const categoryDiv = clickedImage.closest('.image-swiper');
     const categoryImages = categoryDiv.querySelectorAll('.gallery-thumb');
@@ -388,6 +390,7 @@ imageModalElement.addEventListener('shown.bs.modal', function () {
         },
     });
 });
+
 
 
 
