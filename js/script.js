@@ -385,6 +385,7 @@ const WORKER_ENDPOINT = "https://forma-mail-handler-temp-a24.borisbokan.workers.
 document.addEventListener('DOMContentLoaded', function() {
     // Da bi se osiguralo da se forma i formMessage pronađu
     const form = document.getElementById('contactForm');
+    
     const formMessage = document.getElementById('formMessage'); 
 
     if (form) {
@@ -410,12 +411,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 poruka: form.querySelector('[name="poruka"]').value
             };
 
+            const formData = new FormData(form);
+
             fetch(WORKER_ENDPOINT, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data),
+                body:formData,
             })
             // Ažuriran .then da bolje čita greške od Worker-a
             .then(response => {
