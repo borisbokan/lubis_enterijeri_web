@@ -207,3 +207,50 @@ imageModalElement.addEventListener('shown.bs.modal', function () {
         },
     });
 });
+
+// URL вашег Cloudflare Worker-а - Морате га креирати прво!
+const WORKER_ENDPOINT = 'https://forma-handler-lubis.borisbokan.workers.dev';
+
+// ===================================
+// HANDLER ZA SLANJE FORME KROZ CLOUDFLARE WORKER
+// ===================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
+
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Заустави стандардно слање форме
+
+            formMessage.textContent = 'Šaljem poruku...';
+            formMessage.style.color = '#E4B93F'; // Zlatna boja
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            fetch(WORKER_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Došlo je do greške na serveru.');
+            })
+            .then(result => {
+                formMessage.textContent = 'Poruka uspešno poslata! Hvala Vam.';
+                formMessage.style.color = 'green';
+                form.reset(); // Obriši polja forme
+            })
+            .catch(error => {
+                formMessage.textContent = 'Greška pri slanju: ' + error.message;
+                formMessage.style.color = '#E2402A'; // Crvena boja
+            });
+        });
+    }
+});
