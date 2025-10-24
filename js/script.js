@@ -209,7 +209,7 @@ imageModalElement.addEventListener('shown.bs.modal', function () {
 });
 
 // URL вашег Cloudflare Worker-а - Морате га креирати прво!
-const WORKER_ENDPOINT = 'https://forma-handler-lubis.borisbokan.workers.dev/';
+const WORKER_ENDPOINT = 'https://forma-handler-final.borisbokan.workers.dev';
 
 // ===================================
 // HANDLER ZA SLANJE FORME KROZ CLOUDFLARE WORKER
