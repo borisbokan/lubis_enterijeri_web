@@ -208,29 +208,6 @@ imageModalElement.addEventListener('shown.bs.modal', function () {
     });
 });
 
-// URL вашег Cloudflare Worker-а - Морате га креирати прво!
-const WORKER_ENDPOINT = "https://forma-mail-handler-temp-a24.borisbokan.workers.dev/";
-
-// ===================================
-// HANDLER ZA SLANJE FORME KROZ CLOUDFLARE WORKER
-// ===================================
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-(function () {
-    'use strict'
-    // Dohvati sve forme kojima želimo da primenimo prilagođene Bootstrap stilove validacije
-    var forms = document.querySelectorAll('.needs-validation')
-    // Prođi kroz forme i spreči slanje ako nisu validne
-    Array.prototype.slice.call(forms)
-        .forEach(function (form) {
-            form.addEventListener('submit', function (event) {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
-                form.classList.add('was-validated')
-            }, false)
-        })
-})()
 
 // ===================================
 // INICIJALIZACIJA SLIDERA I LIGHTBOXA (Ostavljamo neizmenjeno)
@@ -398,10 +375,14 @@ imageModalElement.addEventListener('shown.bs.modal', function () {
 // HANDLER ZA SLANJE FORME KROZ CLOUDFLARE WORKER (FIKSIRANO)
 // ===================================
 
-document.addEventListener('DOMContentLoaded', function () {
-    
-    // URL вашег Cloudflare Worker-а - PROVERITE DA LI JE ISPRAVAN!
-    const WORKER_ENDPOINT = "https://forma-mail-handler-temp-a24.borisbokan.workers.dev/";
+// URL вашег Cloudflare Worker-а - PROVERITE DA LI JE ISPRAVAN!
+const WORKER_ENDPOINT = "https://forma-mail-handler-temp-a24.borisbokan.workers.dev/";
+
+// ===================================
+// HANDLER ZA SLANJE FORME KROZ CLOUDFLARE WORKER (FIKSIRANO)
+// ===================================
+
+document.addEventListener('DOMContentLoaded', function() {
     // Da bi se osiguralo da se forma i formMessage pronađu
     const form = document.getElementById('contactForm');
     const formMessage = document.getElementById('formMessage'); 
