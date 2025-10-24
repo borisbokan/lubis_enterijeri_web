@@ -226,8 +226,11 @@ document.addEventListener('DOMContentLoaded', function() {
             formMessage.textContent = 'Šaljem poruku...';
             formMessage.style.color = '#E4B93F'; // Zlatna boja
 
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
+            const data = {
+                ime: form.querySelector('[name="ime"]').value,
+                email: form.querySelector('[name="email"]').value,
+                poruka: form.querySelector('[name="poruka"]').value
+            };
 
             fetch(WORKER_ENDPOINT, {
                 method: 'POST',
@@ -236,21 +239,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 body: JSON.stringify(data),
             })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error('Došlo je do greške na serveru.');
-            })
-            .then(result => {
-                formMessage.textContent = 'Poruka uspešno poslata! Hvala Vam.';
-                formMessage.style.color = 'green';
-                form.reset(); // Obriši polja forme
-            })
-            .catch(error => {
-                formMessage.textContent = 'Greška pri slanju: ' + error.message;
-                formMessage.style.color = '#E2402A'; // Crvena boja
-            });
+
+            // const formData = new FormData(form);
+            // const data = Object.fromEntries(formData.entries());
+
+            // fetch(WORKER_ENDPOINT, {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify(data),
+            // })
+            // .then(response => {
+            //     if (response.ok) {
+            //         return response.json();
+            //     }
+            //     throw new Error('Došlo je do greške na serveru.');
+            // })
+            // .then(result => {
+            //     formMessage.textContent = 'Poruka uspešno poslata! Hvala Vam.';
+            //     formMessage.style.color = 'green';
+            //     form.reset(); // Obriši polja forme
+            // })
+            // .catch(error => {
+            //     formMessage.textContent = 'Greška pri slanju: ' + error.message;
+            //     formMessage.style.color = '#E2402A'; // Crvena boja
+            // });
         });
     }
 });
