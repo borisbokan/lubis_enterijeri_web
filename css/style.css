@@ -185,19 +185,52 @@ section.py-5.bg-light p.lead {
   color: var(--dark-text-col or) !important;
 }
 
-.hover-zoom {
-  overflow: hidden;
-  position: relative;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* =====================
+   Galerija/Slike efekti (NOVO - KORISTIMO CONTAIN PROTIV DEFORMACIJE)
+   ===================== */
+
+         /* Novi kontejner koji drži pozadinsku sliku */
+         .gallery-image-wrapper {
+           /* FIKSNA VISINA kontejnera - ovo nam je 200px */
+           height: 200px !important;
+           width: 100%;
+    
+           /* KRITIČNO: Centriranje i skaliranje pozadinske slike */
+           background-position: center center !important;
+           background-repeat: no-repeat !important;
+           background-size: cover !important;
+           /* Ovo garantuje da nema razvlačenja */
+    
+           cursor: pointer;
+           transition: transform 0.3s ease, box-shadow 0.3s ease;
+           overflow: hidden;
+         }
+
+
+         /* Pošto više nema IMG taga, ove stilove moramo prebaciti na wrapper */
+         .hover-zoom:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+         }
+    
+         /* Osiguravamo da je sam Swiper-slide kontejner visok 200px */
+         .image-swiper .swiper-slide {
+           height: 200px !important;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+         }
+
+/* Osiguravamo da je sam Swiper-slide kontejner visok 200px */
+.image-swiper .swiper-slide {
+  height: 200px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.hover-zoom:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-}
 
-/* ... (Ostali stilovi za slike ostaju isti) ... */
+
 
 /* =======================================================
    STILOVI ZA SWIPER NAVIGACIJU (ČISTI KRUGOVI)
@@ -239,6 +272,24 @@ section.py-5.bg-light p.lead {
   display: none !important;
 }
 
+/* =======================================================
+   KONTROLA SEKCIJE SA SWIPEROM (Galerija)
+   ======================================================= */
+.swiper-category-wrapper {
+  /* KRITIČNO: Postavlja koordinatni sistem za dugmad koja su apsolutno pozicionirana */
+  position: relative;
+
+  /* Dodaje vertikalni razmak između kategorija */
+  margin-bottom: 3rem;
+
+  /* Osigurava da je kontejner širok */
+  width: 100%;
+
+  /* Opciono: Daje malo paddinga na desktopu/tabletu */
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 /* ... (Ostatak Swiper positioning ostaje isti) ... */
 
 
@@ -277,8 +328,13 @@ section.py-5.bg-light p.lead {
 .services-list-section h4 {
   color: var(--primary-color);
 }
-
-/* ... (Ostali stilovi za usluge su u redu) ... */
+.image-swiper .swiper-slide {
+  height: 200px !important;
+  display: flex;
+  align-items: center;
+  /* Osigurava centriranje slike vertikalno */
+  justify-content: center;
+}
 
 
 /* ----------------------------------------------------------------
@@ -569,6 +625,13 @@ footer {
     z-index: 1050;
     /* Standardni Bootstrap z-index za navigaciju */
   }
+
+    /* Osiguravamo minimalnu širinu slličice na mobilnom, ako je potrebno */
+    .col-md-4 .hover-zoom {
+      min-width: 250px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 }
 
 /* ... (Media queries ostaju isti) ... */

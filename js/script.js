@@ -137,50 +137,73 @@ document.addEventListener('DOMContentLoaded', function() {
 let modalSwiper = null;
 const imageModalElement = document.getElementById('imageModal'); // Dohvati modalni element
 
-// 1. Definišemo funkciju openModal
-window.openModal = function(clickedImage) {
+function openModal(element) {
+    // 1. Pronalazimo element koji sadrži SVE slličice (swiper-category-wrapper)
+    const categoryWrapper = element.closest('.swiper-category-wrapper');
     
-    // Dohvatamo elemente potrebne za popunjavanje modala
-    const categoryDiv = clickedImage.closest('.image-swiper');
+    // 2. Pronalazimo SVE nove DIV-ove sa klasom .gallery-image-wrapper unutar te kategorije
+    const allThumbnails = categoryWrapper.querySelectorAll('.gallery-image-wrapper');
     
-    // Selektujemo sve IMG elemente sa klasom gallery-thumb
-    // (Pazimo da koristimo element koji sadrži data-full atribut)
-    const categoryImages = categoryDiv.querySelectorAll('.gallery-thumb');
-    const modalWrapper = document.getElementById('modal-swiper-wrapper');
-
-    // 1. Priprema sadržaja modala
-    modalWrapper.innerHTML = '';
-    
-    // 2. Dinamičko popunjavanje modala svim slikama iz iste kategorije
-    let initialSlideIndex = 0;
-    categoryImages.forEach((img, index) => {
-        // Koristimo data-full za veliku sliku i data-caption sa roditeljskog <a> taga
-        const fullSrc = img.getAttribute('data-full'); 
-        const parentLink = img.closest('a'); // Dohvati roditeljski <a> tag
-        const caption = parentLink ? parentLink.getAttribute('data-caption') : ''; // Dohvati natpis
-        
-        const slide = document.createElement('div');
-        slide.classList.add('swiper-slide');
-        
-        // Dodajemo i natpis ispod slike unutar slajda u Modalu
-        slide.innerHTML = `
-            <img src="${fullSrc}" class="img-fluid" alt="Uvećana slika">
-            <p class="modal-caption-text">${caption}</p>
-        `;
-        modalWrapper.appendChild(slide);
-
-        // Određivanje koja je slika kliknuta
-        if (img === clickedImage) {
-            initialSlideIndex = index;
+    // 3. Pronalazimo indeks kliknutog elementa (da bi modal počeo od njega)
+    let startIndex = -1;
+    allThumbnails.forEach((thumb, index) => {
+        if (thumb === element) {
+            startIndex = index;
         }
     });
 
-    // 3. Prikazivanje Modala
-    const imageModal = new bootstrap.Modal(imageModalElement);
+    if (startIndex === -1) return; // Greška, ne bi trebalo da se desi
+
+    // 4. Očisti modal wrapper
+    const modalWrapper = document.getElementById('modal-swiper-wrapper');
+    modalWrapper.innerHTML = '';
+
+    // 5. Kreiraj slajdove za modal
+    allThumbnails.forEach((thumb) => {
+        // Hvatamo data-full i data-alt direktno iz thumb (elementa)
+        const fullSrc = thumb.getAttribute('data-full');
+        const altText = thumb.getAttribute('data-alt');
+        
+        const newSlide = document.createElement('div');
+        newSlide.className = 'swiper-slide';
+        // U modalu želimo pravu IMG tag
+        newSlide.innerHTML = `
+            <img src="${fullSrc}" alt="${altText}" class="img-fluid">
+            `;
+        modalWrapper.appendChild(newSlide);
+    });
+
+    // 6. Otvori modal
+    const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
     imageModal.show();
-    
-    // SAČUVAMO INICIJALNI SLAJD ZA KASNIJU INICIJALIZACIJU
-    imageModalElement.setAttribute('data-initial-slide', initialSlideIndex);
+
+    // 7. Inicijalizuj modal swiper
+    // Koristimo setTimeout jer Swiper mora da se inicijalizuje NAKON što se modal prikaže
+    document.getElementById('imageModal').addEventListener('shown.bs.modal', function () {
+        // Uništi prethodnu instancu Swiper-a ako postoji (važno da ne bi došlo do sukoba)
+        if (window.modalSwiperInstance) {
+            window.modalSwiperInstance.destroy(true, true);
+        }
+        
+        window.modalSwiperInstance = new Swiper('.modal-swiper', {
+            loop: true,
+            initialSlide: startIndex,
+            navigation: {
+                nextEl: '.custom-swiper-modal-next',
+                prevEl: '.custom-swiper-modal-prev',
+            },
+            pagination: {
+                el: '.custom-swiper-pagination',
+                type: 'fraction',
+            },
+        });
+    }, { once: true }); // Koristi { once: true } da se event handler automatski ukloni
+
+    // Ako modal već nije otvoren, treba nam dodatno ručno okidanje
+    if (!document.getElementById('imageModal').classList.contains('show')) {
+        // Ako modal nije otvoren, Swiper će se pokrenuti kada se modal prikaže (shown.bs.modal)
+        // ali ako je već otvoren (što ne bi trebalo), moramo ga pokrenuti ručno.
+    }
 }
 
 // 2. Inicijalizacija Swipera kada je Modal POTPUNO OTVOREN
@@ -306,45 +329,76 @@ document.addEventListener('DOMContentLoaded', function() {
 // ===================================
 // FUNKCIONALNOST SWIPER MODALNOG PROZORA (za Gallery.html) (Ostavljamo neizmenjeno)
 // ===================================
-
-
-
-window.openModal = function (clickedImage) {
+function openModal(element) {
+    // 1. Pronalazimo elemente: Slike i kontejner kategorije
+    const categoryWrapper = element.closest('.swiper-category-wrapper');
+    const allThumbnails = categoryWrapper.querySelectorAll('.gallery-image-wrapper');
     
-    let modalSwiper = null;
-const imageModalElement = document.getElementById('imageModal'); 
-    
-    const categoryDiv = clickedImage.closest('.image-swiper');
-    const categoryImages = categoryDiv.querySelectorAll('.gallery-thumb');
+    // 2. Pronalazimo indeks kliknutog elementa (startnu poziciju)
+    let startIndex = Array.from(allThumbnails).indexOf(element);
+    if (startIndex === -1) return; 
+
+    // 3. Očisti modal wrapper
     const modalWrapper = document.getElementById('modal-swiper-wrapper');
-
     modalWrapper.innerHTML = '';
-    
-    let initialSlideIndex = 0;
-    categoryImages.forEach((img, index) => {
-        const fullSrc = img.getAttribute('data-full'); 
-        const parentLink = img.closest('a');
-        const caption = parentLink ? parentLink.getAttribute('data-caption') : '';
-        
-        const slide = document.createElement('div');
-        slide.classList.add('swiper-slide');
-        
-        slide.innerHTML = `
-            <img src="${fullSrc}" class="img-fluid" alt="Uvećana slika">
-            <p class="modal-caption-text">${caption}</p>
-        `;
-        modalWrapper.appendChild(slide);
 
-        if (img === clickedImage) {
-            initialSlideIndex = index;
-        }
+    // 4. Kreiraj slajdove za modal (ubacujemo IMG tagove)
+    allThumbnails.forEach((thumb) => {
+        const fullSrc = thumb.getAttribute('data-full');
+        const altText = thumb.getAttribute('data-alt');
+        
+        const newSlide = document.createElement('div');
+        newSlide.className = 'swiper-slide';
+        
+        // Koristimo IMG tag u modalu!
+        newSlide.innerHTML = `
+            <img src="${fullSrc}" alt="${altText}" class="img-fluid" style="max-height: 85vh; width: auto;">
+        `;
+        modalWrapper.appendChild(newSlide);
     });
 
-    const imageModal = new bootstrap.Modal(imageModalElement);
+    // 5. Otvori modal
+    const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
     imageModal.show();
-    
-    imageModalElement.setAttribute('data-initial-slide', initialSlideIndex);
+
+    // 6. Inicijalizuj modal swiper NAKON ŠTO SE MODAL POTPUNO PRIKAŽE
+    document.getElementById('imageModal').addEventListener('shown.bs.modal', function () {
+        
+        // Uništavamo prethodnu instancu ako postoji 
+        if (window.modalSwiperInstance) {
+            window.modalSwiperInstance.destroy(true, true);
+        }
+        
+        // Stavljamo u globalnu varijablu da možemo uništiti
+        window.modalSwiperInstance = new Swiper('.modal-swiper', {
+            loop: true,
+            initialSlide: startIndex,
+            // Ponovno prikazujemo strelice za navigaciju
+            navigation: {
+                nextEl: '.custom-swiper-modal-next',
+                prevEl: '.custom-swiper-modal-prev',
+            },
+            pagination: {
+                el: '.custom-swiper-pagination',
+                type: 'fraction',
+            },
+        });
+        
+        // Osiguravamo da su strelice vidljive (vjerovatno je ovo uzrok problema)
+        // Ako je Swiper uspio da ih inicijalizuje, moramo se pobrinuti da nisu sakrivene
+        const nextBtn = document.querySelector('.custom-swiper-modal-next');
+        const prevBtn = document.querySelector('.custom-swiper-modal-prev');
+        
+        if (nextBtn && prevBtn) {
+            nextBtn.style.display = 'flex'; // Koristimo flex da bi se videle
+            prevBtn.style.display = 'flex';
+        }
+
+    }, { once: true }); 
 }
+
+
+// VAŽNO: Nakon što ovo radi, MORAMO vratiti Swiper logiku
 
 imageModalElement.addEventListener('shown.bs.modal', function () {
     const initialSlideIndex = parseInt(this.getAttribute('data-initial-slide') || 0);
@@ -378,67 +432,50 @@ imageModalElement.addEventListener('shown.bs.modal', function () {
 // URL вашег Cloudflare Worker-а - PROVERITE DA LI JE ISPRAVAN!
 const WORKER_ENDPOINT = "https://forma-mail-handler-temp-a24.borisbokan.workers.dev/";
 
-// ===================================
-// HANDLER ZA SLANJE FORME KROZ CLOUDFLARE WORKER (FIKSIRANO)
-// ===================================
+// js/script.js
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Da bi se osiguralo da se forma i formMessage pronađu
-    const form = document.getElementById('contactForm');
+document.getElementById('contactForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Sprečava standardno slanje forme
     
-    const formMessage = document.getElementById('formMessage'); 
+    const form = event.target;
+    const formMessage = document.getElementById('formMessage');
+    const endpoint = form.action;
 
-    if (form) {
-        // Dodajemo preventDefault i event.stopPropagation i ovde, za svaki slučaj
-        form.addEventListener('submit', function(e) {
-            e.preventDefault(); 
-            e.stopPropagation();
-
-            // Ako Bootstrap validacija prođe, nastavljamo sa slanjem Workeru
-            if (!form.checkValidity()) {
-                 // Ako validacija ne prođe, Bootstrap će prikazati poruke
-                return;
-            }
-
-            formMessage.textContent = 'Šaljem poruku...';
-            formMessage.style.color = '#E4B93F'; 
-
-            // KRITIČNO: Ručno prikupljanje podataka - ovo je najpouzdanije!
-            const data = {
-                // Koristimo querySelector da direktno uzmemo vrednosti
-                ime: form.querySelector('[name="ime"]').value,
-                email: form.querySelector('[name="email"]').value,
-                poruka: form.querySelector('[name="poruka"]').value
-            };
-
-            const formData = new FormData(form);
-
-            fetch(WORKER_ENDPOINT, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body:formData,
-            })
-            // Ažuriran .then da bolje čita greške od Worker-a
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                // Ako Worker vrati 400 ili 500, response.json() će pročitati poruku greške
-                return response.json().then(errorData => {
-                    throw new Error(errorData.message || 'Došlo je do nepoznate greške na serveru.');
-                });
-            })
-            .then(result => {
-                formMessage.textContent = 'Poruka uspešno poslata! Hvala Vam.';
-                formMessage.style.color = 'green';
-                form.reset(); 
-            })
-            .catch(error => {
-                formMessage.textContent = 'Greška pri slanju: ' + error.message;
-                formMessage.style.color = '#E2402A';
-            });
-        });
+    // 1. Klijentska validacija (iz prethodnog razgovora)
+    if (!form.checkValidity()) {
+        form.classList.add('was-validated');
+        return;
     }
+    
+    // 2. Kreiranje FormData objekta
+    const formData = new FormData(form); 
+
+    // Prikazivanje poruke o slanju i onemogućavanje dugmeta
+    formMessage.innerHTML = '<div class="alert alert-info">Šaljem poruku...</div>';
+    const submitButton = form.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+
+    // 3. Slanje na Worker endpoint
+    fetch(endpoint, {
+        method: 'POST',
+        body: formData, // Worker očekuje FormData, pa je šaljemo direktno
+    })
+    .then(response => response.json())
+    .then(data => {
+        submitButton.disabled = false;
+        form.classList.remove('was-validated');
+
+        if (data.success) {
+            formMessage.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+            form.reset(); // Resetuje formu nakon uspeha
+        } else {
+            // Prikaz greške iz Worker-a
+            formMessage.innerHTML = `<div class="alert alert-danger">Greška: ${data.message}</div>`;
+        }
+    })
+    .catch(error => {
+        submitButton.disabled = false;
+        console.error('Konekciona greška:', error);
+        formMessage.innerHTML = '<div class="alert alert-danger">Došlo je do greške pri povezivanju. Molimo pokušajte ponovo.</div>';
+    });
 });
