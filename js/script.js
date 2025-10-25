@@ -430,7 +430,7 @@ imageModalElement.addEventListener('shown.bs.modal', function () {
 // ===================================
 
 // URL вашег Cloudflare Worker-а - PROVERITE DA LI JE ISPRAVAN!
-const WORKER_ENDPOINT = "https://forma-mail-handler-temp-a24.borisbokan.workers.dev/";
+const WORKER_ENDPOINT = "https://email-sender-lubis.borisbokan.workers.dev/";
 
 // js/script.js
 
