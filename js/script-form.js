@@ -4,9 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const workerEndpoint = 'https://lubisenterijeri.com/api/email';
   form.addEventListener('submit', function (event) {
       
-    
+  
         event.preventDefault();
-
         const formData = new FormData(form);
         // Konvertovanje FormData u plain JavaScript objekat (JSON)
         const jsonData = {};
