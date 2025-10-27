@@ -400,27 +400,27 @@ function openModal(element) {
 
 // VAŽNO: Nakon što ovo radi, MORAMO vratiti Swiper logiku
 
-imageModalElement.addEventListener('shown.bs.modal', function () {
-    const initialSlideIndex = parseInt(this.getAttribute('data-initial-slide') || 0);
+// imageModalElement.addEventListener('shown.bs.modal', function () {
+//     const initialSlideIndex = parseInt(this.getAttribute('data-initial-slide') || 0);
 
-    if (modalSwiper !== null) {
-        modalSwiper.destroy(true, true);
-    }
+//     if (modalSwiper !== null) {
+//         modalSwiper.destroy(true, true);
+//     }
     
-    modalSwiper = new Swiper('.modal-swiper', {
-        loop: true, 
-        slidesPerView: 1,
-        initialSlide: initialSlideIndex, 
-        navigation: {
-            nextEl: '.custom-swiper-modal-next', 
-            prevEl: '.custom-swiper-modal-prev',
-        },
-        pagination: {
-            el: '.custom-swiper-pagination',
-            type: 'fraction', 
-        },
-    });
-});
+//     modalSwiper = new Swiper('.modal-swiper', {
+//         loop: true, 
+//         slidesPerView: 1,
+//         initialSlide: initialSlideIndex, 
+//         navigation: {
+//             nextEl: '.custom-swiper-modal-next', 
+//             prevEl: '.custom-swiper-modal-prev',
+//         },
+//         pagination: {
+//             el: '.custom-swiper-pagination',
+//             type: 'fraction', 
+//         },
+//     });
+// });
 
 
 
