@@ -4,8 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const workerEndpoint = 'https://email-sender-lubis.borisbokan.workers.dev/';
   form.addEventListener('submit', function (event) {
       
-    const workerEndpoint = 'https://email-sender-lubis.borisbokan.workers.dev/';
-
+    
         event.preventDefault();
 
         const formData = new FormData(form);
