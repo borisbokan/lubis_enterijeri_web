@@ -424,26 +424,27 @@ imageModalElement.addEventListener('shown.bs.modal', function () {
 
 
 // ===================================Slanje fome kroz Cloudflare Worker
-// ===================================Slanje fome kroz Cloudflare Worker (FINALNI Fiks)
+// ===================================Slanje fome kroz Cloudflare Worker (JSON VERZIJA)
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('contactForm');
     const workerEndpoint = 'https://email-sender-lubis.borisbokan.workers.dev/';
 
     form.addEventListener('submit', function (event) {
-        event.preventDefault(); // Zaustavi standardno slanje forme
+        event.preventDefault();
 
-        // Korišćenje FormData objekta za prikupljanje podataka
-        const formData = new FormData(form); 
+        const formData = new FormData(form);
+        // Konvertovanje FormData u plain JavaScript objekat (JSON)
+        const jsonData = {};
+        formData.forEach((value, key) => jsonData[key] = value);
 
-        // Slanje forme putem fetch-a
         fetch(workerEndpoint, {
             method: 'POST',
-            // VAŽNO: NE postavljamo 'Content-Type' heder, 
-            // jer fetch() to radi automatski i ispravno za FormData.
-            body: formData 
+            headers: {
+                'Content-Type': 'application/json', // KLJUČNA PROMENA: Šaljemo JSON
+            },
+            body: JSON.stringify(jsonData), // Šaljemo JSON string
         })
         .then(response => {
-            // Prvo provera da li je stigao 200/500/etc.
             if (response.ok) {
                 return response.json();
             } else {
@@ -452,7 +453,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(data => {
             if (data.success) {
-                // Dodavanje vizuelnog feedbacka (alert je privremeno rešenje)
+                // Prikaz uspeha
                 alert('Poruka je uspešno poslata!');
                 form.reset(); 
             } else {
