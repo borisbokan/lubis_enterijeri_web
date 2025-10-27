@@ -422,6 +422,9 @@ imageModalElement.addEventListener('shown.bs.modal', function () {
     });
 });
 
+
+// ===================================Slanje fome kroz Cloudflare Worker
+// ===================================Slanje fome kroz Cloudflare Worker (FINALNI Fiks)
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('contactForm');
     const workerEndpoint = 'https://email-sender-lubis.borisbokan.workers.dev/';
@@ -435,11 +438,21 @@ document.addEventListener('DOMContentLoaded', function () {
         // Slanje forme putem fetch-a
         fetch(workerEndpoint, {
             method: 'POST',
-            body: formData // Worker sada prepoznaje FormData
+            // VAŽNO: NE postavljamo 'Content-Type' heder, 
+            // jer fetch() to radi automatski i ispravno za FormData.
+            body: formData 
         })
-        .then(response => response.json())
+        .then(response => {
+            // Prvo provera da li je stigao 200/500/etc.
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(`HTTP greška: ${response.status}`);
+            }
+        })
         .then(data => {
             if (data.success) {
+                // Dodavanje vizuelnog feedbacka (alert je privremeno rešenje)
                 alert('Poruka je uspešno poslata!');
                 form.reset(); 
             } else {
@@ -448,63 +461,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => {
             console.error('Lokalna greška:', error);
-            alert('Došlo je do greške na klijentskoj strani.');
+            alert('Došlo je do greške na klijentskoj strani ili Workeru: ' + error.message);
         });
     });
 });
-
-
-// // ===================================
-// // HANDLER ZA SLANJE FORME KROZ CLOUDFLARE WORKER (FIKSIRANO)
-// // ===================================
-
-// // URL вашег Cloudflare Worker-а - PROVERITE DA LI JE ISPRAVAN!
-// const WORKER_ENDPOINT = "https://email-sender-lubis.borisbokan.workers.dev/";
-
-// // js/script.js
-
-// document.getElementById('contactForm').addEventListener('submit', function(event) {
-//     event.preventDefault(); // Sprečava standardno slanje forme
-    
-//     const form = event.target;
-//     const formMessage = document.getElementById('formMessage');
-//     const endpoint = form.action;
-
-//     // 1. Klijentska validacija (iz prethodnog razgovora)
-//     if (!form.checkValidity()) {
-//         form.classList.add('was-validated');
-//         return;
-//     }
-    
-//     // 2. Kreiranje FormData objekta
-//     const formData = new FormData(form); 
-
-//     // Prikazivanje poruke o slanju i onemogućavanje dugmeta
-//     formMessage.innerHTML = '<div class="alert alert-info">Šaljem poruku...</div>';
-//     const submitButton = form.querySelector('button[type="submit"]');
-//     submitButton.disabled = true;
-
-//     // 3. Slanje na Worker endpoint
-//     fetch(endpoint, {
-//         method: 'POST',
-//         body: formData, // Worker očekuje FormData, pa je šaljemo direktno
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         submitButton.disabled = false;
-//         form.classList.remove('was-validated');
-
-//         if (data.success) {
-//             formMessage.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
-//             form.reset(); // Resetuje formu nakon uspeha
-//         } else {
-//             // Prikaz greške iz Worker-a
-//             formMessage.innerHTML = `<div class="alert alert-danger">Greška: ${data.message}</div>`;
-//         }
-//     })
-//     .catch(error => {
-//         submitButton.disabled = false;
-//         console.error('Konekciona greška:', error);
-//         formMessage.innerHTML = '<div class="alert alert-danger">Došlo je do greške pri povezivanju. Molimo pokušajte ponovo.</div>';
-//     });
-// });
