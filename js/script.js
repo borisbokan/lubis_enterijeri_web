@@ -1,161 +1,111 @@
-document.addEventListener('DOMContentLoaded', function () {
-    'use strict'
+// Globalna varijabla za čuvanje instance Swipera, neophodno za ispravno uništavanje
+window.modalSwiperInstance = null;
 
-    // ===============================================
-    // 1. Inicijalizacija Swiper Slajdera
-    // ===============================================
-
-    // Inicijalizacija Swipera za Video sekciju (ako postoji)
-    if (document.querySelector('.video-swiper')) {
-        new Swiper('.video-swiper', {
-            slidesPerView: 1,
-            spaceBetween: 30,
-            loop: true,
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            breakpoints: {
-                // Prikazuje 2 slajda na širini od 768px i više
-                768: {
-                    slidesPerView: 2,
-                    spaceBetween: 40,
-                },
-                // Prikazuje 3 slajda na širini od 1024px i više
-                1024: {
-                    slidesPerView: 3,
-                    spaceBetween: 50,
-                },
-            }
-        });
+function openModal(element) {
+    // 1. Pronalazimo elemente: Slike i kontejner kategorije
+    // Koristimo .swiper-category-wrapper jer je to stabilan roditelj
+    const categoryWrapper = element.closest('.swiper-category-wrapper');
+    if (!categoryWrapper) {
+        console.error("Greška: Roditeljski '.swiper-category-wrapper' nije pronađen.");
+        return;
+    }
+    
+    // Slike su sada DIV-ovi sa klasom .gallery-image-wrapper
+    const allThumbnails = categoryWrapper.querySelectorAll('.gallery-image-wrapper');
+    
+    // 2. Pronalazimo indeks kliknutog elementa (startnu poziciju)
+    const allThumbnailsArray = Array.from(allThumbnails);
+    let startIndex = allThumbnailsArray.indexOf(element);
+    
+    if (startIndex === -1) {
+        console.error("Greška: Kliknuti element nije pronađen u listi sličica.");
+        return;
     }
 
+    // 3. Očisti modal wrapper (mesto gde Swiper pravi slajdove)
+    const modalWrapper = document.getElementById('modal-swiper-wrapper');
+    modalWrapper.innerHTML = '';
 
-    // Inicijalizacija Swipera za Galeriju slika (po kategorijama)
-    document.querySelectorAll('.image-swiper').forEach(function(swiperElement) {
-        new Swiper(swiperElement, {
-            slidesPerView: 1,
-            spaceBetween: 10,
-            loop: false, // Ne mora biti loop za galeriju
-            navigation: {
-                nextEl: swiperElement.parentNode.querySelector('.swiper-button-next'),
-                prevEl: swiperElement.parentNode.querySelector('.swiper-button-prev'),
-            },
-            breakpoints: {
-                // Prikazuje 2 slike na širini od 576px i više
-                576: {
-                    slidesPerView: 2,
-                    spaceBetween: 15,
-                },
-                // Prikazuje 3 slike na širini od 768px i više
-                768: {
-                    slidesPerView: 3,
-                    spaceBetween: 20,
-                },
-                // Prikazuje 4 slike na širini od 1024px i više
-                1024: {
-                    slidesPerView: 4,
-                    spaceBetween: 30,
-                },
-            }
-        });
+    // 4. Kreiraj slajdove za modal (ubacujemo IMG tagove sa data-full URL-om)
+    allThumbnails.forEach((thumb) => {
+        const fullSrc = thumb.getAttribute('data-full');
+        const altText = thumb.getAttribute('data-alt');
+        
+        const newSlide = document.createElement('div');
+        newSlide.className = 'swiper-slide';
+        
+        // U modalu koristimo standardni IMG tag
+        newSlide.innerHTML = `
+            <img src="${fullSrc}" alt="${altText}" class="img-fluid" style="max-height: 85vh; width: auto;">
+        `;
+        modalWrapper.appendChild(newSlide);
     });
 
-
-    // ===============================================
-    // 2. Logika za Modalnu Galeriju (Popup)
-    // ===============================================
-
-    // Globalne varijable za modal i Swiper
+    // 5. Otvori modal
     const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
-    const modalSwiperWrapper = document.getElementById('modal-swiper-wrapper');
-    let modalSwiperInstance = null;
-    let allImagesData = []; // Čuva sve podatke o slikama na stranici
+    imageModal.show();
 
-    // Funkcija koja prikuplja sve slike sa stranice
-    function collectAllImages() {
-        allImagesData = [];
-        // Tražimo sve elemente koji imaju data-full i data-alt
-        const imageElements = document.querySelectorAll('.gallery-image-wrapper[data-full]');
+    // 6. Inicijalizuj modal swiper NAKON ŠTO SE MODAL POTPUNO PRIKAŽE
+    // Događaj 'shown.bs.modal' je ključan za rad Swiper strelica
+    document.getElementById('imageModal').addEventListener('shown.bs.modal', function handler() {
         
-        imageElements.forEach((el, index) => {
-            const fullUrl = el.getAttribute('data-full');
-            const altText = el.getAttribute('data-alt');
-            
-            allImagesData.push({
-                index: index, // Globalni indeks
-                fullUrl: fullUrl,
-                altText: altText
-            });
-        });
-    }
-
-    // Pozivamo funkciju za prikupljanje slika pri učitavanju
-    collectAllImages();
-
-    // Globalna funkcija za otvaranje modala (poziva se iz HTML-a onclick="openModal(this)")
-    window.openModal = function(clickedElement) {
-        const initialIndex = allImagesData.findIndex(item => item.fullUrl === clickedElement.getAttribute('data-full'));
-
-        // Ako Swiper već postoji, uništavamo ga
-        if (modalSwiperInstance) {
-            modalSwiperInstance.destroy(true, true);
-            modalSwiperInstance = null;
+        // Uništavamo prethodnu instancu ako postoji
+        if (window.modalSwiperInstance) {
+            window.modalSwiperInstance.destroy(true, true);
         }
         
-        // Praznimo wrapper pre popunjavanja
-        modalSwiperWrapper.innerHTML = '';
-
-        // Popunjavamo wrapper novim slajdovima
-        allImagesData.forEach(item => {
-            const slide = document.createElement('div');
-            slide.classList.add('swiper-slide', 'modal-slide');
-            
-            const img = document.createElement('img');
-            img.src = item.fullUrl;
-            img.alt = item.altText;
-            img.classList.add('img-fluid', 'modal-image');
-            
-            slide.appendChild(img);
-            modalSwiperWrapper.appendChild(slide);
-        });
-
-        // Inicijalizujemo novi Swiper sa svim slikama
-        modalSwiperInstance = new Swiper('.modal-swiper', {
-            slidesPerView: 1,
-            spaceBetween: 0,
+        // Inicijalizacija nove instance
+        window.modalSwiperInstance = new Swiper('.modal-swiper', {
             loop: true,
-            initialSlide: initialIndex, // Otvara na kliknutoj slici
+            initialSlide: startIndex,
             navigation: {
                 nextEl: '.custom-swiper-modal-next',
                 prevEl: '.custom-swiper-modal-prev',
             },
             pagination: {
                 el: '.custom-swiper-pagination',
-                clickable: true,
+                type: 'fraction',
             },
         });
+        
+        // Ručno vraćamo display strelica, za svaki slučaj (ako su negde skrivene)
+        const nextBtn = document.querySelector('.custom-swiper-modal-next');
+        const prevBtn = document.querySelector('.custom-swiper-modal-prev');
+        if (nextBtn && prevBtn) {
+            nextBtn.style.display = 'flex';
+            prevBtn.style.display = 'flex';
+        }
 
-        // Prikazujemo modal
-        imageModal.show();
-    }
+        // Uklanjamo ovaj event listener nakon pokretanja
+        this.removeEventListener('shown.bs.modal', handler);
 
+    }); 
+}
 
-    // ===============================================
-    // 3. Bootstrap Validacija (Preuzeto iz Vašeg koda)
-    // ===============================================
-    var forms = document.querySelectorAll('.needs-validation')
-    Array.prototype.slice.call(forms).forEach(function (form) {
-        form.addEventListener('submit', function (event) {
-            if (!form.checkValidity()) {
-                event.preventDefault()
-                event.stopPropagation()
+// Dodatne funkcije za inicijalizaciju Swipera na galeriji (ako ih nisi imao)
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.image-swiper').forEach(el => {
+        const nextEl = el.closest('.swiper-category-wrapper').querySelector('.category-nav-btn.swiper-button-next');
+        const prevEl = el.closest('.swiper-category-wrapper').querySelector('.category-nav-btn.swiper-button-prev');
+
+        new Swiper(el, {
+            slidesPerView: 1,
+            spaceBetween: 10,
+            loop: true,
+            navigation: {
+                nextEl: nextEl,
+                prevEl: prevEl,
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 30
+                },
+                992: {
+                    slidesPerView: 4,
+                    spaceBetween: 30
+                }
             }
-            form.classList.add('was-validated')
-        }, false)
-    })
-    
-    // NAPOMENA: Ako odlučite da se vratite na Cloudflare Worker logiku za formu,
-    // taj kod ide ovde, ali je trenutno uklonjen.
-    
+        });
+    });
 });
