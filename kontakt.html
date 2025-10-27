@@ -64,11 +64,11 @@
             </h2>
             <div id="formMessage" class="my-3" role="alert">
             </div>
-            <form id="contactForm" class="needs-validation mb-5" novalidate>
+            <form id="contactForm" actionn="https://lubis-email-handler.borisbokan.workers.dev/" method="post" class="needs-validation mb-5" novalidate>
     
               <div class="mb-3">
                 <label for="ime" class="form-label">Vaše Ime i Prezime</label>
-                <input type="text" class="form-control" id="ime" name="ime" required>
+                <input type="text" class="form-control" id="name" name="name" required>
                 <div class="invalid-feedback">
                   Molimo unesite vaše ime.
                 </div>
@@ -84,7 +84,7 @@
     
               <div class="mb-3">
                 <label for="poruka" class="form-label">Vaša Poruka / Opis Projekta</label>
-                <textarea class="form-control" id="poruka" name="poruka" rows="5" required></textarea>
+                <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
                 <div class="invalid-feedback">
                   Molimo unesite poruku.
                 </div>
