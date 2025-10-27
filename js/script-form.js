@@ -1,7 +1,7 @@
 // ===================================Slanje fome kroz Cloudflare Worker (JSON VERZIJA)
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('contactForm');
-  const workerEndpoint = 'https://email-sender-lubis.borisbokan.workers.dev/';
+  const workerEndpoint = 'https://lubisenterijeri.com/api/email';
   form.addEventListener('submit', function (event) {
       
     
