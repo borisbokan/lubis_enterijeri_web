@@ -108,4 +108,31 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+    const videoSwiperEl = document.querySelector('.video-swiper');
+    if (videoSwiperEl) {
+        const videoNextEl = videoSwiperEl.querySelector('.swiper-button-next');
+        const videoPrevEl = videoSwiperEl.querySelector('.swiper-button-prev');
+
+        new Swiper('.video-swiper', {
+            slidesPerView: 1, // Podrazumevana vrednost (mobilni)
+            spaceBetween: 30,
+            loop: true,
+            navigation: {
+                nextEl: videoNextEl,
+                prevEl: videoPrevEl,
+            },
+            breakpoints: {
+                // Tablet i veći ekrani: Prikaz 2 slajda
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 30
+                },
+                // Desktop i veći ekrani: Prikaz 3 slajda
+                1200: {
+                    slidesPerView: 3,
+                    spaceBetween: 30
+                }
+            }
+        });
+    }
 });
